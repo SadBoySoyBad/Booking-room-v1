@@ -25,14 +25,14 @@
       <!-- ปฏิทิน -->
       <div class="border rounded p-4">
         <div class="flex justify-between items-center mb-4 bg-gray-200 rounded-full">
-          <button class="bg-white rounded-full shadow-md p-2 w-8 h-8 m-1 flex items-center justify-center cursor-pointer hover:bg-gray-100" @click="prevMonth">
+          <button class="bg-white rounded-full shadow-md p-2 w-8 h-8 m-1 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100" @click="prevMonth">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
           <h2 class="text-xl font-bold">{{ months[month] }} {{ year }}</h2> 
-          <button class="bg-white rounded-full shadow-md p-2 w-8 h-8 m-1 flex items-center justify-center cursor-pointer" @click="nextMonth">
+          <button class="bg-white rounded-full shadow-md p-2 w-8 h-8 m-1 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100" @click="nextMonth">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentcolor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -48,8 +48,8 @@
             :key="idx"
             class="w-10 h-10 flex items-center justify-center cursor-pointer transition-all duration-150"
             :class="[
-            day.day && selectedDate !== day.date ? 'hover:bg-red-100 rounded-full' :'',
-            selectedDate === day.date ? 'bg-red-500 text-white rounded-full' : '',
+            day.day && selectedDate !== day.date ? 'hover:bg-red-100 rounded-full active:bg-red-600 active:scale-90 transition-all duration-100' :'',
+            selectedDate === day.date ? 'bg-red-500 text-white rounded-full active:bg-red-600 active:scale-90 transition-all duration-100' : '',
             isToday(day.date) ? 'bg-gray-200 rounded-full' : '',
             ]"
             @click="day.day && selectDate(day.date)"

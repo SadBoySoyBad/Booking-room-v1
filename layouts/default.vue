@@ -4,17 +4,19 @@
     <header class="flex justify-between items-center px-6 py-4 bg-white text-black shadow-lg border-d border-b-1 border-black">  <!-- border-b border-black border-b-2 -->
 
       <!-- Logo -->
+      <NuxtLink to="/" class="hover:underline transition">
       <div class="flex items-center space-x-2">
         <img src="/logo.png" alt="logo" class="h-8 w-auto">
         <h1 class="text-2xl font-bold">arrangemeet.</h1>
       </div>
+      </NuxtLink>
 
       <!-- Navigation -->
       <nav class="flex items-center space-x-6 text-md font-semibold mr-5">
         <NuxtLink to="/letterbox" class="text-red-500 hover:underline transition">
           LetterBox
         </NuxtLink>
-        <NuxtLink to="/reservation" class="hover:underline transition">
+        <NuxtLink to="/booking" class="hover:underline transition">
           Reservation
         </NuxtLink>
 
@@ -25,7 +27,7 @@
           </button>
         </template>
         <template v-else>
-          <NuxtLink to="/" class="hover:underline transition">
+          <NuxtLink to="/login" class="hover:underline transition">
             Login
           </NuxtLink>
         </template>

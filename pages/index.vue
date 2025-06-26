@@ -219,7 +219,7 @@ const unauthorizedMeetings = computed(() => {
 
 // Check login and get user only on client
 onMounted(() => {
-  if (process.client) {
+  if (import.meta.client) {
     const guest = localStorage.getItem('guest')
     currentUser.value = guest || ''
     isLoggedIn.value = !!guest

@@ -1,259 +1,90 @@
-export default defineNuxtConfig({ devtools: { enabled: true }, modules: [
-'@nuxt/ui', // ต้องมีบรรทัดนี้ // ... โมดูลอื่นๆ ที่คุณเลือก เช่น '@nuxt/image',
-'@nuxt/eslint' ], // คุณอาจจะมี tailwindcss object
-เพิ่มเติมสำหรับการตั้งค่าที่กำหนดเอง // ui: { // // ... การตั้งค่า UI Components
-// } })
-
-<!-- <template>
-  <div class="bg-gray-100 min-h-screen p-4 flex flex-col items-center">
-    <div class="relative w-full flex justify-center items-center mb-6 mt-8">
-      <h1
-        class="text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-black/20 to-transparent absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center leading-none tracking-widest"
-      >
-        Reserve
-      </h1>
-      <h1
-        class="top-5 text-[3rem] font-bold text-black relative z-10 text-center leading-none"
-      >
-        Booking
-      </h1>
-    </div>
-
-    <div class="flex-grow flex justify-center items-center w-full">
-      <div
-        class="bg-white p-8 rounded-lg shadow-lg max-w-xl w-full border-2 border-black"
-      >
-        <div class="grid grid-cols-2 gap-4 mb-6">
-          <div>
-            <label for="name" class="block text-gray-700 text-sm font-bold mb-2"
-              >Name :</label
-            >
-            <input
-              id="name"
-              type="text"
-              placeholder="Name Surname"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-black"
-            >
-          </div>
-
-          <div>
-            <label
-              for="email"
-              class="block text-gray-700 text-sm font-bold mb-2"
-              >Email :</label
-            >
-            <input
-              id="email"
-              type="email"
-              placeholder="example@email.com"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-black"
-            >
-          </div>
-
-          <div>
-            <label
-              for="phone"
-              class="block text-gray-700 text-sm font-bold mb-2"
-              >Phone :</label
-            >
-            <input
-              id="phone"
-              type="tel"
-              placeholder="+00 000-0000"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-black"
-            >
-          </div>
-
-          <div>
-            <label for="room" class="block text-gray-700 text-sm font-bold mb-2"
-              >Room :</label
-            >
-            <select
-              id="room"
-              class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-red-500"
-            >
-              <option value="room1">Room 1</option>
-              <option value="room2">Room 2</option>
-              <option value="room3">Room 3</option>
-            </select>
-          </div>
-
-          <div class="col-span-2">
-            <label
-              for="start-time"
-              class="block text-gray-700 text-sm font-bold mb-2"
-              >Time :</label
-            >
-            <div class="flex items-center space-x-4">
-              <select
-                id="start-time"
-                class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-red-500"
-              >
-                <option value="08:00">08:00</option>
-                <option value="08:00">08:30</option>
-                <option value="09:00">09:00</option>
-                <option value="08:00">09:30</option>
-                <option value="08:00">10:00</option>
-                <option value="08:00">10:30</option>
-                <option value="08:00">11:00</option>
-                <option value="08:00">11:30</option>
-                <option value="08:00">12:00</option>
-                <option value="08:00">12:30</option>
-                <option value="08:00">13:00</option>
-                <option value="08:00">13:30</option>
-                <option value="08:00">14:00</option>
-                <option value="08:00">14:30</option>
-                <option value="08:00">15:00</option>
-                <option value="08:00">15:30</option>
-                <option value="08:00">16:00</option>
-                <option value="08:00">16:30</option>
-                <option value="08:00">17:00</option>
-                <option value="08:00">17:30</option>
-              </select>
-              <span>-</span>
-              <select
-                id="end-time"
-                class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-red-500"
-              >
-                <option value="08:00">08:30</option>
-                <option value="09:00">09:00</option>
-                <option value="08:00">09:30</option>
-                <option value="08:00">10:00</option>
-                <option value="08:00">10:30</option>
-                <option value="08:00">11:00</option>
-                <option value="08:00">11:30</option>
-                <option value="08:00">12:00</option>
-                <option value="08:00">12:30</option>
-                <option value="08:00">13:00</option>
-                <option value="08:00">13:30</option>
-                <option value="08:00">14:00</option>
-                <option value="08:00">14:30</option>
-                <option value="08:00">15:00</option>
-                <option value="08:00">15:30</option>
-                <option value="08:00">16:00</option>
-                <option value="08:00">16:30</option>
-                <option value="08:00">17:00</option>
-                <option value="08:00">17:30</option>
-                <option value="08:00">18:00</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex justify-center space-x-4">
-          <button
-            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Save Changes
-          </button>
-          
-          <NuxtLink to="/bookingconfirm">
-          <button
-            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Confirm
-          </button>
-          </NuxtLink>
-          <button
-            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup>
-useHead({
-  title: "Reservation",
-});
-</script>
-
-<style scoped>
-/* CSS เพิ่มเติมหากจำเป็น (แต่ควรใช้ Tailwind เป็นหลัก) */
-</style> -->
-
-
 <template>
-  <div class="max-w-4xl mx-auto p-10">
-    <h1 class="text-4xl font-bold mb-2">Reservation</h1>
-    <p class="text-gray-500 mb-6 text-lg">Reserve your meetings here.</p>
-    <div class="grid grid-cols-2 gap-10">
+  <div class="max-w-7xl mx-auto p-6 grid grid-cols-3 gap-6">
+    <!-- Sidebar Calendar -->
+    <div class="col-span-1 border border-gray-300 rounded-xl p-4 bg-white shadow h-[calc(100vh-100px)] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 bg-gray-200 rounded-full">
+        <button
+          class="bg-white rounded-full shadow-md p-2 w-8 h-8 m-1 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100"
+          @click="prevMonth"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
 
-      <!-- Calendar Left -->
-      <div>
-        <div class="border-b border-gray-300 mb-4"></div>
-        <div class="flex items-center justify-between mb-4">
-          <button class="text-xl">&#x276E;</button>
-          <h2 class="text-lg font-medium">June 2025</h2>
-          <button class="text-xl">&#x276F;</button>
-        </div>
-        <div class="grid grid-cols-7 gap-2 text-center text-gray-500">
-          <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
-          <template v-for="d in 30" :key="d">
-            <div class="text-black">{{ d }}</div>
-          </template>
+        <h2 class="text-xl font-bold">{{ months[month] }} {{ year }}</h2>
+
+        <button
+          class="bg-white rounded-full shadow-md p-2 w-8 h-8 m-1 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100"
+          @click="nextMonth"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+      <div class="grid grid-cols-7 gap-2 text-center justify-center">
+        <div v-for="d in days" :key="d" class="font-semibold text-gray-500 mb-2 m-1 flex justify-center">{{ d }}</div>
+        <div
+          v-for="(day, idx) in calendarDays"
+          :key="idx"
+          class="w-10 h-10 flex items-center justify-center cursor-pointer transition-all duration-150"
+          :class="[
+            day.day && selectedDate !== day.date ? 'hover:bg-red-100 rounded-full active:bg-red-600 active:scale-90 transition-all duration-100' : '',
+            selectedDate === day.date ? 'bg-red-500 text-white rounded-full active:bg-red-600 active:scale-90 transition-all duration-100' : '',
+            isToday(day.date) ? 'bg-gray-200 rounded-full' : '',
+          ]"
+          @click="day.day && selectDate(day.date)"
+        >
+          {{ day.day || '' }}
         </div>
       </div>
+      <!-- button -->
+      <div class="p-3 justify-center items-center flex mt-4">
+        <button class="bg-blue-500 hover:bg-blue-700 hover:shadow-lg text-white font-bold py-2 px-4 rounded-full active:bg-blue-600 active:scale-95 transition-all duration-100">Booking room</button>
+        <button class="bg-gray-300 hover:bg-gray-400 hover:shadow-lg text-gray-700 font-bold py-2 px-4 rounded-full ml-2 active:bg-gray-500 active:scale-95 transition-all duration-100">History</button>
+      </div>
 
-      <!-- Form Right -->
-      <div class="space-y-4">
-        <div>
-          <label class="block font-medium">Name :</label>
-          <input type="text" placeholder="Name Surname" class="w-full border border-gray-400 rounded-full px-4 py-1" />
+      <!-- แสดงรายการจอง -->
+      <div class="mt-6">
+        <h3 class="font-semibold text-lg mb-2">Booking details</h3>
+        <ul>
+          <li
+            v-for="meeting in meetingsOnSelectedDate"
+            :key="meeting.id"
+            class="text-sm border-b py-2"
+          >
+            <div>
+              <span class="font-semibold">{{ meeting.time }}</span>
+              <span> - </span>
+              <span>{{ isUserRelated(meeting) ? meeting.topic + ' @ Room ' + meeting.room : 'Room ' + meeting.room + ' - Reserved' }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right Side: Meeting Timeline -->
+    <div class="col-span-2 border border-gray-300 rounded-xl p-6 bg-white shadow h-[calc(100vh-100px)] overflow-y-auto">
+      <h2 class="text-xl font-bold mb-4">Meetings on {{ selectedDate }}</h2>
+      <div class="relative h-full border-l border-gray-300">
+        <div v-for="h in 24" :key="h" class="h-12 flex items-center text-sm text-gray-500 pl-4 border-b border-gray-200">
+          <span class="w-16 inline-block text-right pr-4">{{ h.toString().padStart(2, '0') }}:00</span>
         </div>
 
-        <div>
-          <label class="block font-medium">Email :</label>
-          <input type="email" placeholder="example1234@email.com" class="w-full border border-gray-400 rounded-full px-4 py-1" />
-        </div>
-
-        <div>
-          <label class="block font-medium">Phone :</label>
-          <input type="tel" placeholder="+00012-345-6789" class="w-full border border-gray-400 rounded-full px-4 py-1" />
-        </div>
-
-        <div>
-          <label class="block font-medium">Room :</label>
-          <div class="flex gap-2 mt-1">
-            <button class="border border-black rounded-full px-4 py-1">Room 1</button>
-            <button class="bg-gray-400 text-white rounded-full px-4 py-1">Room 2</button>
-            <button class="bg-red-700 text-white rounded-full px-4 py-1">Room 3</button>
+        <div
+          v-for="meeting in meetingsOnSelectedDate"
+          :key="meeting.id"
+          class="absolute left-20 right-4 text-sm rounded px-2 py-1 shadow-md transition-transform duration-150"
+          :class="isUserRelated(meeting) ? 'bg-blue-500 text-white hover:scale-[1.01]' : 'bg-gray-200 text-gray-600'"
+          :style="getMeetingStyle(meeting.time)"
+        >
+          <div class="font-bold">
+            {{ isUserRelated(meeting) ? meeting.topic : 'Room ' + meeting.room }}
           </div>
-        </div>
-
-        <div>
-          <label class="block font-medium">Participants :</label>
-          <input type="text" placeholder="00" class="w-full border border-gray-400 rounded-full px-4 py-1" />
-        </div>
-
-        <div>
-          <label class="block font-medium">Requirements :</label>
-          <input type="text" placeholder="Dropdown Lists" class="w-full border border-gray-400 rounded-full px-4 py-1" />
-        </div>
-
-        <div class="flex gap-2 items-center">
-          <label class="font-medium">Time :</label>
-          <input type="time" class="border border-gray-400 rounded-full px-4 py-1 w-[90px]" />
-          <span>-</span>
-          <input type="time" class="border border-gray-400 rounded-full px-4 py-1 w-[90px]" />
-        </div>
-
-        <div class="flex gap-2 items-center">
-          <label class="font-medium">Start :</label>
-          <input type="date" class="border border-gray-400 rounded-full px-4 py-1" />
-        </div>
-
-        <div class="flex gap-2 items-center">
-          <label class="font-medium">End :</label>
-          <input type="date" class="border border-gray-400 rounded-full px-4 py-1" />
-        </div>
-
-        <div class="flex gap-4 mt-4">
-          <button class="bg-green-300 text-white rounded-full px-6 py-2">Confirm</button>
-          <button class="bg-red-300 text-white rounded-full px-6 py-2">Cancel</button>
+          <div class="text-xs">
+            {{ meeting.time }} <span v-if="!isUserRelated(meeting)"> - Reserved</span>
+          </div>
         </div>
       </div>
     </div>
@@ -261,9 +92,137 @@ useHead({
 </template>
 
 <script setup>
-// Logic จะใส่ต่อภายหลัง เช่น router.push เมื่อ Confirm
+import { ref, computed, onMounted } from 'vue'
+
+const today = new Date()
+const year = ref(today.getFullYear())
+const month = ref(today.getMonth())
+const selectedDate = ref(today.toISOString().split('T')[0])
+const currentUser = ref('')
+const isLoggedIn = ref(false)
+
+const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+]
+
+const allMeetings = [
+  {
+    id: 1,
+    date: '2025-06-28',
+    room: 'A',
+    topic: 'Morning Brief',
+    time: '08:00 - 09:30',
+    user: 'test@gmail.com',
+    participants: []
+  },
+  {
+    id: 2,
+    date: '2025-06-28',
+    room: 'B',
+    topic: 'Design Review',
+    time: '14:00 - 15:00',
+    user: 'test@gmail.com',
+    participants: []
+  },
+  {
+    id: 3,
+    date: '2025-06-26',
+    room: 'D',
+    topic: 'Project Kickoff',
+    time: '10:00 - 12:00',
+    user: 'test@gmail.com',
+    participants: []
+  },
+  {
+    id: 4,
+    date: '2025-06-26',
+    room: 'C',
+    topic: 'Weekly Sync',
+    time: '13:00 - 14:30',
+    user: 'test@gmail.com',
+    participants: []
+  },
+  
+]
+
+const calendarDays = computed(() => {
+  const result = []
+  const firstDay = new Date(year.value, month.value, 1).getDay()
+  const lastDate = new Date(year.value, month.value + 1, 0).getDate()
+
+  for (let i = 0; i < firstDay; i++) result.push({ day: null, date: null })
+
+  for (let d = 1; d <= lastDate; d++) {
+    const mm = String(month.value + 1).padStart(2, '0')
+    const dd = String(d).padStart(2, '0')
+    const dateStr = `${year.value}-${mm}-${dd}`
+    result.push({ day: d, date: dateStr })
+  }
+
+  return result
+})
+
+const meetingsOnSelectedDate = computed(() => {
+  return allMeetings.filter(m => m.date === selectedDate.value)
+})
+
+function isUserRelated(meeting) {
+  return isLoggedIn.value && (meeting.user === currentUser.value || meeting.participants.includes(currentUser.value))
+}
+
+function selectDate(dateStr) {
+  selectedDate.value = dateStr
+}
+
+function prevMonth() {
+  if (month.value === 0) {
+    month.value = 11
+    year.value--
+  } else {
+    month.value--
+  }
+}
+
+function nextMonth() {
+  if (month.value === 11) {
+    month.value = 0
+    year.value++
+  } else {
+    month.value++
+  }
+}
+
+function isToday(dateStr) {
+  const todayStr = today.toISOString().split('T')[0]
+  return todayStr === dateStr
+}
+
+function getMeetingStyle(time) {
+  const [start, end] = time.split(' - ')
+  const [startH, startM] = start.split(':').map(Number)
+  const [endH, endM] = end.split(':').map(Number)
+  const top = startH * 48 + startM * 0.8
+  const height = (endH * 60 + endM - (startH * 60 + startM)) * 0.8
+  return `top: ${top}px; height: ${height}px`
+}
+
+onMounted(() => {
+  if (import.meta.client) {
+    const guest = localStorage.getItem('guest')
+    currentUser.value = guest || ''
+    isLoggedIn.value = !!guest
+  }
+})
 </script>
 
 <style scoped>
-/* ปรับแต่งเพิ่มเติมหากต้องการ */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
 </style>

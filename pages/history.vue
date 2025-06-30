@@ -2,7 +2,7 @@
   <div class="bg-gray-100 min-h-screen p-4 flex flex-col items-center">
     <div class="relative w-full flex justify-center items-center mb-6 mt-8">
       <h1
-        class="text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-black/20 to-transparent absolute w-full top-2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center leading-none tracking-widest"
+        class="text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-black/20 to-transparent absolute w-full top- 2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center leading-none tracking-widest"
       >
         MANAGE
       </h1>
@@ -34,7 +34,7 @@
           <div class="text-sm md:text-base text-gray-700">{{ item.time }}</div>
           <div class="text-sm md:text-base text-gray-700">{{ item.name }}</div>
           <div class="text-sm md:text-base text-gray-700">{{ item.type }}</div>
-          
+
           <div class="flex items-center justify-center">
             <button
               :class="actionButtonClass(item.actionType)"
@@ -61,12 +61,15 @@
               <svg v-if="item.statusType === 'Pending'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
+              <svg v-if="item.statusType === 'Cancelled'" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
               {{ item.statusType }}
             </button>
           </div>
 
           <div class="flex justify-center items-center">
-            <button class="text-gray-500 hover:text-gray-700 font-bold text-xl leading-none">...</button>
+            <HistoryActionPopUp @select-option="handleHistoryOptionSelect(index, $event)" />
           </div>
         </div>
 
@@ -80,6 +83,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import HistoryActionPopUp from '../components/HistoryActionPopUp.vue'; // <-- ตรวจสอบ Path นี้ให้ถูกต้องกับโครงสร้างโฟลเดอร์ของคุณ
 
 // ตั้งค่า Title ของหน้าเว็บเมื่อ Component ถูก Mount
 onMounted(() => {
@@ -89,30 +93,66 @@ onMounted(() => {
 // ข้อมูลจำลองสำหรับตาราง (Mock Data)
 const historyData = ref([
   {
-    date: 'DD MM YY',
-    time: '00:00',
-    name: 'Example1',
+    date: '01 Jan 23',
+    time: '10:00 - 11:00',
+    name: 'Meeting Room A',
     type: 'Request',
-    actionType: 'Request', // ใช้ 'Request' หรือ 'Reserved'
-    statusType: 'Approved', // ใช้ 'Approved' หรือ 'Pending'
+    actionType: 'Request',
+    statusType: 'Approved',
   },
   {
-    date: 'DD MM YY',
-    time: '00:00',
-    name: 'Example2',
+    date: '05 Feb 23',
+    time: '14:30 - 15:30',
+    name: 'Projector B',
     type: 'Booking',
     actionType: 'Reserved',
     statusType: 'Approved',
   },
   {
-    date: 'DD MM YY',
-    time: '00:00',
-    name: 'Example3',
+    date: '10 Mar 23',
+    time: '09:00 - 10:00',
+    name: 'Laptop C',
     type: 'Request',
     actionType: 'Request',
     statusType: 'Pending',
   },
+  {
+    date: '15 Apr 23',
+    time: '11:00 - 12:00',
+    name: 'Conference Hall D',
+    type: 'Booking',
+    actionType: 'Reserved',
+    statusType: 'Pending',
+  },
+  {
+    date: '20 May 23',
+    time: '16:00 - 17:00',
+    name: 'Whiteboard E',
+    type: 'Request',
+    actionType: 'Request',
+    statusType: 'Approved',
+  },
 ]);
+
+// ฟังก์ชันที่จะถูกเรียกเมื่อ HistoryActionPopUp ส่ง event 'select-option'
+const handleHistoryOptionSelect = (index, option) => {
+  if (option === 'edit') {
+    editItem(historyData.value[index]);
+  } else if (option === 'cancel') {
+    // Logic การยกเลิก: เปลี่ยน statusType เป็น 'Cancelled'
+    historyData.value[index].statusType = 'Cancelled';
+    alert(`Item "${historyData.value[index].name}" has been cancelled.`);
+  }
+};
+
+// ฟังก์ชันสำหรับจัดการการคลิกปุ่ม Edit
+const editItem = (item) => {
+  alert(`Editing item: ${item.name}`);
+  // **NOTE:** หากในอนาคตคุณต้องการให้ "Edit" เปิดฟอร์มการจอง/แก้ไข
+  // คุณจะต้องใช้การสื่อสารแบบ Global State Management (เช่น Vuex, Pinia)
+  // หรือ emit เหตุการณ์ขึ้นไปให้คอมโพเนนต์แม่ (App.vue) จัดการ
+  // เช่น: emit('open-edit-form', item);
+};
 
 // Computed properties หรือ methods สำหรับกำหนด class ของปุ่ม Action/Status
 const actionButtonClass = (type) => {
@@ -128,7 +168,9 @@ const statusButtonClass = (type) => {
   if (type === 'Approved') {
     return 'bg-green-100 text-green-800';
   } else if (type === 'Pending') {
-    return 'bg-orange-100 text-orange-800'; // ใช้ orange เพื่อให้เข้ากับสีทรายในรูป
+    return 'bg-orange-100 text-orange-800';
+  } else if (type === 'Cancelled') { // เพิ่ม class สำหรับสถานะ Cancelled
+    return 'bg-red-100 text-red-800';
   }
   return '';
 };

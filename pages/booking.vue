@@ -41,8 +41,8 @@
       </div>
       <!-- button -->
       <div class="p-3 justify-center items-center flex mt-4">
-        <button class="bg-blue-500 hover:bg-blue-700 hover:shadow-lg text-white font-bold py-2 px-4 rounded-full active:bg-blue-600 active:scale-95 transition-all duration-100">Booking room</button>
-        <button class="bg-gray-300 hover:bg-gray-400 hover:shadow-lg text-gray-700 font-bold py-2 px-4 rounded-full ml-2 active:bg-gray-500 active:scale-95 transition-all duration-100">History</button>
+        <button class="bg-blue-500 hover:bg-blue-700 hover:shadow-lg text-white font-bold py-2 px-4 rounded-full active:bg-blue-600 active:scale-95 transition-all duration-100 cursor-pointer" @click="showModal = true">Booking room</button>
+        <button class="bg-gray-300 hover:bg-gray-400 hover:shadow-lg text-gray-700 font-bold py-2 px-4 rounded-full ml-2 active:bg-gray-500 active:scale-95 transition-all duration-100 cursor-pointer">History</button>
       </div>
 
       <!-- แสดงรายการจอง -->
@@ -88,11 +88,22 @@
         </div>
       </div>
     </div>
+  <!-- Pop up -->
+    <BookingModal
+      :visible="showModal"
+      :selected-date="selectedDate"
+      @close="showModal = false"
+      @submit="handleBookingSubmit"
+    />
   </div>
+
+
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import BookingModal from '../components/BookingModal.vue'
+const showModal = ref(false)
 
 const today = new Date()
 const year = ref(today.getFullYear())
@@ -215,6 +226,22 @@ onMounted(() => {
     isLoggedIn.value = !!guest
   }
 })
+
+function handleBookingSubmit(newBooking){
+  allMeetings.push({
+    // id: allMeetings.length + 1,
+    // ...newBooking,
+    // user: currentUser.value,
+    // participants: []
+    id: allMeetings.length + 1,
+    date: newBooking.date,
+    room: newBooking.room,
+    topic: newBooking.topic,
+    time: newBooking.time,
+    user: currentUser.value,
+    participants: []
+  })
+}
 </script>
 
 <style scoped>

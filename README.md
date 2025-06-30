@@ -71,5 +71,15 @@ yarn preview
 # bun
 bun run preview
 ```
+Tools
+# Tailwind
+npm install -D tailwindcss postcss autoprefixer
+
+# Calendar
+npm install vue-cal
+
+# Config Carlendar
+npm install date-fns @vueuse/core
+
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

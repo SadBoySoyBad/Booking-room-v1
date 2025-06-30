@@ -35,7 +35,6 @@
           </button>
 
           <h2 class="text-xl font-bold">{{ months[month] }} {{ year }}</h2>
- 
           <button
             class="bg-white rounded-full shadow-md p-2 w-8 h-8 m-1 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100"
             @click="nextMonth"

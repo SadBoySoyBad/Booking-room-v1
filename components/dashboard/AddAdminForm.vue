@@ -10,16 +10,16 @@
       :visible="showAddAdminModal"
       @close="showAddAdminModal = false"
       @submit="handleAddAdmin"
-      type="admin"                 
-      title="Add Admin Form"       
-      confirm-button-text="Confirm" 
+      type="admin"
+      title="Add Admin Form"
+      confirm-button-text="Confirm"
     />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import BookingModal from '../BookingModal.vue'; // <-- ตรวจสอบ Path นี้ให้ถูกต้อง
+import BookingModal from '../../components/BookingModal.vue'; // <-- แก้ไข Path นี้ให้ถูกต้อง
 
 const showAddAdminModal = ref(false);
 

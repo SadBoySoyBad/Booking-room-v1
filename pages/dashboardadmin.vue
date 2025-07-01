@@ -25,7 +25,7 @@
             <div class="p-4 border-2 border-black flex flex-col h-full">
               <h3 class="text-xl font-bold mb-4 text-center">Requests approval</h3>
               <p class="text-sm text-gray-600 mb-4 text-center">Take action to accept / deny guests' request</p>
-              <RequestsApprovalTable :requestsData="requestsApprovalData" />
+              <RequestsApprovalTable :requestsData="requestsApprovalData" @update-requests="handleUpdateRequests" />
             </div>
             <button @click="openRequestsApprovalPopup" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 p-1 bg-white/50 rounded-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -35,8 +35,6 @@
           </div>
 
           <div class="p-4 border-2 border-black flex flex-col">
-            <!-- <h3 class="text-xl font-bold mb-4 text-center">Add Admin Form</h3>
-            <p class="text-sm text-gray-600 mb-4 text-center">Insert required information below</p> -->
             <AddAdminForm />
           </div>
 
@@ -63,10 +61,9 @@
       type="custom-content"
       :full-screen="true"
       @close="showRequestsApprovalModal = false"
+      @submit="showRequestsApprovalModal = false"
     >
-        <template v-if="showRequestsApprovalModal">
-            <RequestsApprovalTable :requestsData="requestsApprovalData" :isModal="true" />
-        </template>
+      <RequestsApprovalTable :requestsData="requestsApprovalData" :isModal="true" @update-requests="handleUpdateRequests" />
     </BookingModal>
 
     <BookingModal
@@ -76,10 +73,9 @@
       type="custom-content"
       :full-screen="true"
       @close="showActivityLogModal = false"
+      @submit="showActivityLogModal = false"
     >
-        <template v-if="showActivityLogModal">
-            <ActivityLogTable :activityLogData="activityLogData" :isModal="true" />
-        </template>
+      <ActivityLogTable :activityLogData="activityLogData" :isModal="true" />
     </BookingModal>
 
   </div>
@@ -87,11 +83,12 @@
 
 <script setup>
 import { ref } from 'vue';
+// ตรวจสอบ path ของ components เหล่านี้ให้ถูกต้องตามโครงสร้างโฟลเดอร์ของคุณ
 import RoomStatusCard from '../components/dashboard/RoomStatusCard.vue';
 import RequestsApprovalTable from '../components/dashboard/RequestsApprovalTable.vue';
 import AddAdminForm from '../components/dashboard/AddAdminForm.vue';
 import ActivityLogTable from '../components/dashboard/ActivityLogTable.vue';
-import BookingModal from '../components/BookingModal.vue';
+import BookingModal from '../components/BookingModal.vue'; // นี่คือ BookingModal ที่เราแก้ไขล่าสุด
 
 useHead({
   title: "Dashboard Admin",
@@ -104,12 +101,12 @@ const requestsApprovalData = ref([
 ]);
 
 const activityLogData = ref([
-  { date: 'DD MM YY', time: '00:00', name: 'User1', role: 'User', action: 'Log In', actionType: 'login' },
-  { date: 'DD MM YY', time: '00:00', name: 'User1', role: 'User', action: 'Log Out', actionType: 'logout' },
-  { date: 'DD MM YY', time: '00:00', name: 'Guest1', role: 'Guest', action: 'Request', actionType: 'request' },
-  { date: 'DD MM YY', time: '00:00', name: 'User', role: 'User', action: 'Reserved', actionType: 'reserved' },
-  { date: 'DD MM YY', time: '00:00', name: 'Admin1', role: 'Admin', action: 'Add', actionType: 'add' },
-  { date: 'DD MM YY', time: '00:00', name: 'Admin1', role: 'Admin', action: 'Edited', actionType: 'edited' },
+  { date: '01 Jul 25', time: '10:00', name: 'User1', role: 'User', action: 'Log In', actionType: 'login' },
+  { date: '01 Jul 25', time: '10:05', name: 'User1', role: 'User', action: 'Log Out', actionType: 'logout' },
+  { date: '01 Jul 25', time: '10:15', name: 'Guest1', role: 'Guest', action: 'Request', actionType: 'request' },
+  { date: '01 Jul 25', time: '10:30', name: 'User', role: 'User', action: 'Reserved', actionType: 'reserved' },
+  { date: '01 Jul 25', time: '10:45', name: 'Admin1', role: 'Admin', action: 'Add', actionType: 'add' },
+  { date: '01 Jul 25', time: '11:00', name: 'Admin1', role: 'Admin', action: 'Edited', actionType: 'edited' },
 ]);
 
 const showRequestsApprovalModal = ref(false);
@@ -120,6 +117,12 @@ const openRequestsApprovalPopup = () => {
 const showActivityLogModal = ref(false);
 const openActivityLogPopup = () => {
     showActivityLogModal.value = true;
+};
+
+const handleUpdateRequests = ({ action, id }) => {
+  // Logic ในการอัปเดตข้อมูล requestsApprovalData ในคอมโพเนนต์แม่
+  console.log(`Action: ${action} for Request ID: ${id} received in DashboardAdmin`);
+  requestsApprovalData.value = requestsApprovalData.value.filter(req => req.id !== id);
 };
 </script>
 

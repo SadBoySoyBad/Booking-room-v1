@@ -7,7 +7,8 @@
         <div class="font-bold text-gray-800 text-sm md:text-base">Req. Date</div>
         <div class="font-bold text-gray-800 text-sm md:text-base">Req. Room</div>
         <div class="font-bold text-gray-800 text-sm md:text-base">Req. Time</div>
-        <div class="font-bold text-gray-800 text-sm md:text-base text-center">Action</div> </div>
+        <div class="font-bold text-gray-800 text-sm md:text-base text-center">Action</div>
+      </div>
 
       <div class="space-y-2 divide-y divide-gray-200">
         <div v-for="(request, index) in requestsDataInternal" :key="index"
@@ -53,7 +54,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import BookingModal from '../BookingModal.vue'; // ตรวจสอบ Path ให้ถูกต้อง
+import BookingModal from '../../components/BookingModal.vue'; // <-- แก้ไข Path นี้ให้ถูกต้อง
 
 const props = defineProps({
   requestsData: { // รับข้อมูลมาจาก Parent Component

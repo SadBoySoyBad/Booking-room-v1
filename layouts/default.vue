@@ -1,21 +1,30 @@
 <template>
   <div>
-    <!-- Navbar -->
-    <header class="flex justify-between items-center px-6 py-4 bg-white text-black shadow-lg border-d border-b-1 border-black">  <!-- border-b border-black border-b-2 -->
-
-      <!-- Logo -->
+    <header
+      class="flex justify-between items-center px-6 py-4 bg-white text-black shadow-lg border-b border-black"
+    >
       <NuxtLink to="/" class="hover:underline transition">
-      <div class="flex items-center space-x-2">
-        <img src="/logo.png" alt="logo" class="h-8 w-auto">
-        <h1 class="text-2xl font-bold">arrangemeet.</h1>
-      </div>
+        <div class="flex items-center space-x-2">
+          <img src="/logo.png" alt="logo" class="h-8 w-auto" />
+          <h1 class="text-2xl font-bold">arrangemeet.</h1>
+        </div>
       </NuxtLink>
 
-      <!-- Navigation -->
       <nav class="flex items-center space-x-6 text-md font-bold mr-5">
-        <NuxtLink to="/letterbox" class="text-red-500 hover:underline transition">
-          <img src="/letterbox.png" alt="tetterbox" class="h-6 w-auto">
-        </NuxtLink>
+        <div>
+          <button
+            @click="openLetterBox"
+            class="text-red-500 hover:underline transition button-as-link"
+          >
+            <img src="/letterbox.png" alt="letterbox" class="h-6 w-auto" />
+          </button>
+
+          <LetterBoxPopup
+            :isVisible="isLetterBoxPopupVisible"
+            @close-letter-box="isLetterBoxPopupVisible = false"
+          />
+        </div>
+
         <NuxtLink to="/history" class="hover:underline transition">
           History
         </NuxtLink>
@@ -23,9 +32,11 @@
           Reservation
         </NuxtLink>
 
-        <!-- ปุ่ม Login / Logout -->
         <template v-if="isLoggedIn">
-          <button class="hover:underline transition text-red-600" @click="logout">
+          <button
+            class="hover:underline transition text-red-600"
+            @click="logout"
+          >
             Logout
           </button>
         </template>
@@ -37,30 +48,51 @@
       </nav>
     </header>
 
-    <!-- Main page content -->
     <NuxtPage />
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { ref, watchEffect } from "vue";
+import { useRouter } from "vue-router";
+import { useState } from '#app/composables/state';
 
-// ✅ ใช้ useState เพื่อให้แชร์สถานะ login ได้ทุกหน้า
-const isLoggedIn = useState('isLoggedIn', () => false)
-const router = useRouter()
+// ✅ Import Component LetterBoxPopup.vue
+import LetterBoxPopup from "~/components/LetterBoxPopup.vue";
 
-// ✅ อัปเดตสถานะตอนโหลด (เฉพาะ client เท่านั้น)
+// ✅ ตัวแปร ref สำหรับควบคุมการแสดง/ซ่อน Pop-up
+const isLetterBoxPopupVisible = ref(false);
+
+// ✅ ฟังก์ชันสำหรับเปิด Pop-up
+const openLetterBox = () => {
+  isLetterBoxPopupVisible.value = true;
+};
+
+// ✅ ใช้ useState สำหรับสถานะการ Login
+const isLoggedIn = useState("isLoggedIn", () => false);
+const router = useRouter();
+
+// ✅ Logic สำหรับตรวจสอบสถานะ Login จาก localStorage
 if (import.meta.client) {
   watchEffect(() => {
-    isLoggedIn.value = !!localStorage.getItem('guest')
-  })
+    isLoggedIn.value = !!localStorage.getItem("guest");
+  });
 }
 
 // ✅ ฟังก์ชัน Logout
 function logout() {
-  localStorage.removeItem('guest')
-  isLoggedIn.value = false
-  router.push('/')
+  localStorage.removeItem("guest");
+  isLoggedIn.value = false;
+  router.push("/");
 }
-
 </script>
+
+<style scoped>
+.button-as-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  /* คุณมี TailwindCSS classes อยู่แล้ว: text-red-500 hover:underline transition */
+}
+</style>

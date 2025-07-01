@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { ref, computed, watch } from 'vue';
 
 // --- useHead logic ---
@@ -285,4 +285,114 @@ const selectDate = (date) => {
 useHead({
   title: "Bookingconfirm",
 });
-</script> -->
+</script> --> 
+<template>
+  <div class="bg-gray-100 min-h-screen p-4 flex flex-col items-center">
+    <div class="relative w-full flex justify-center items-center mb-6 mt-8">
+      <h1
+        class="text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-black/20 to-transparent absolute w-full top-2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center leading-none tracking-widest"
+      >
+        SUCCESSFUL
+      </h1>
+      <h1
+        class="top-2 text-[3rem] font-bold text-black relative z-10 text-center leading-none"
+      >
+        Booking
+      </h1>
+    </div>
+
+    <div
+      class="bg-white rounded-lg shadow-xl p-6 sm:p-8 w-full max-w-4xl border-2 border-black/10 flex flex-col items-center"
+    >
+      <h2 class="text-3xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-gray-300 text-center w-full">Topic 01</h2>
+
+      <div class="flex flex-row gap-8 items-start w-full"> 
+        <div class="flex-shrink-0 w-1/2 flex justify-center items-center">
+          <div
+            class="w-full max-w-[300px] h-[250px] border-2 border-gray-400 flex items-center justify-center relative"
+          >
+            <span class="text-gray-600 font-bold text-lg">Meeting Room Blueprint</span>
+            </div>
+        </div>
+
+        <div class="flex-grow w-1/2 text-gray-800 text-lg flex flex-col justify-between h-full">
+          <div class="space-y-1.5 mb-4">
+            <div class="flex items-start justify-between w-full">
+              <div class="font-bold whitespace-nowrap mr-2">Date :</div>
+              <div class="text-right">Day, DD MMúrese</div>
+            </div>
+            <div class="flex items-start justify-between w-full">
+              <div class="font-bold whitespace-nowrap mr-2">Time :</div>
+              <div class="text-right">00:00 - 00:00</div>
+            </div>
+            <div class="flex items-start justify-between w-full">
+              <div class="font-bold whitespace-nowrap mr-2">Meeting Room :</div>
+              <div class="text-right">Room 1</div>
+            </div>
+          </div>
+
+          <div class="space-y-1.5 mb-4">
+            <div class="flex items-start justify-between w-full">
+              <div class="font-bold whitespace-nowrap mr-2">Requirements :</div>
+              <ul class="list-disc text-right pl-4"> <li>Device</li>
+                <li>Cable</li>
+                <li>Laptop</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="space-y-1.5 mb-4">
+            <div class="flex items-start justify-between w-full">
+              <div class="font-bold whitespace-nowrap mr-2">Booked for :</div>
+              <div class="text-right">Name Surname</div>
+            </div>
+            <div class="flex items-start justify-between w-full">
+              <div class="font-bold whitespace-nowrap mr-2">Phone :</div>
+              <div class="text-right">+00 012-345-6789</div>
+            </div>
+            <div class="flex items-start justify-between w-full">
+              <div class="font-bold whitespace-nowrap mr-2">Email :</div>
+              <div class="text-right">example@email.com</div>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <div class="flex items-start justify-between w-full">
+              <div class="font-bold whitespace-nowrap mr-2">Participant's Email :</div>
+              <ul class="list-disc text-right pl-4"> <li>example1@email.com</li>
+                <li>example2@email.com</li>
+                <li>example3@email.com</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 flex justify-center w-full">
+        <button
+          @click="backToDashboard"
+          class="w-full max-w-sm py-3 rounded-full text-white font-semibold text-lg bg-[#b5c887] hover:bg-[#a4ba75] transition-all duration-300"
+        >
+          Back to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { useRouter } from 'vue-router';
+useHead({
+  title: "Bookingconfirm",
+});
+
+const router = useRouter();
+
+const backToDashboard = () => {
+  router.push('/dashboardadmin');
+};
+</script>
+
+<style scoped>
+/* คุณสามารถเพิ่มหรือปรับแต่ง CSS เพิ่มเติมที่นี่ได้ */
+</style>

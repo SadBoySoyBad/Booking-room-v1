@@ -6,7 +6,7 @@
       **Click to EXPAND as a POP-UP window for full info to edit**
     </button>
 
-    <BookingModal
+    <Adminpopup
       :visible="showAddAdminModal"
       @close="showAddAdminModal = false"
       @submit="handleAddAdmin"
@@ -19,7 +19,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import BookingModal from '../BookingModal.vue'; // <-- ตรวจสอบ Path นี้ให้ถูกต้อง
+import Adminpopup from '../Adminpopup.vue';
 
 const showAddAdminModal = ref(false);
 

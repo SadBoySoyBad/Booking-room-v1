@@ -44,22 +44,22 @@
         </div>
 
         <!-- Time Input -->
-        <div class="flex items-center gap-2 mt-4 text-sm">
+        <div class="flex items-center gap-2 mt-4 text-sm cursor-pointer">
           <label class="font-medium text-gray-700">Time :</label>
-          <input v-model="form.start" type="time" class="border px-2 py-1 rounded-md">
+          <input v-model="form.start" type="time" class="border px-2 py-1 rounded-md cursor-pointer">
           <span>-</span>
-          <input v-model="form.end" type="time" class="border px-2 py-1 rounded-md">
+          <input v-model="form.end" type="time" class="border px-2 py-1 rounded-md cursor-pointer">
         </div>
 
         <!-- Start & End Date -->
         <div class="flex flex-col gap-2 text-sm">
           <div class="flex items-center gap-2">
             <label class="text-gray-700 font-medium">Start :</label>
-            <input type="date" class="border px-2 py-1 rounded-md flex-grow" :value="selectedDate">
+            <input type="date" class="border px-2 py-1 rounded-md flex-grow cursor-pointer" :value="selectedDate">
           </div>
           <div class="flex items-center gap-2">
             <label class="text-gray-700 font-medium">End :</label>
-            <input type="date" class="border px-2 py-1 rounded-md flex-grow" :value="selectedDate">
+            <input type="date" class="border px-2 py-1 rounded-md flex-grow cursor-pointer" :value="selectedDate">
           </div>
         </div>
       </div>
@@ -89,7 +89,7 @@
           <div class="flex gap-2">
             <button 
               v-for="room in ['Meeting 1', 'Meeting 2', 'Meeting 3', 'Meeting 4',]" :key="room" :class="[
-              'px-4 py-1 rounded-full border text-xs font-semibold active:bg-red-100 active:scale-95 transition-all duration-150',
+              'px-4 py-1 rounded-full border text-xs font-semibold active:bg-red-100 active:scale-95 transition-all duration-150 cursor-pointer ',
               form.room === room ? 'bg-red-500 text-white' : 'text-gray-700 hover:bg-gray-100'
             ]" @click="form.room = room">
               {{ room }}
@@ -104,9 +104,9 @@
           <input
             v-model="form.participants[i]" type="email" class="border px-3 py-1 rounded-md flex-grow"
             placeholder="example@email.com">
-          <button class="text-red-500" @click="form.participants.splice(i, 1)">&ndash;</button>
+          <button class="text-red-500 cursor-pointer hover:text-red-600 transition-all duration-150" @click="form.participants.splice(i, 1)">&ndash;</button>
         </div>
-        <button class="text-sm text-blue-500 hover:underline self-start mt-1" @click="form.participants.push('')">+ Add
+        <button class="text-sm text-blue-500 hover:underline self-start mt-1 cursor-pointer transition-all duration-150" @click="form.participants.push('')">+ Add
           Email</button>
 
         <div class="flex flex-col gap-2">
@@ -135,11 +135,11 @@
 
         <div class="flex gap-4 pt-6">
           <button  
-            class="flex-1 py-2 rounded-full text-white font-semibold bg-[#b5c887] hover:bg-[#a4ba75] active:scale-95 transition-all duration-150 active:bg-green-1000"
+            class="flex-1 py-2 rounded-full text-white font-semibold bg-[#b5c887] hover:bg-[#a4ba75] active:scale-95 transition-all duration-150 active:bg-green-1000 cursor-pointer"
             @click="submit">
             Confirm
           </button>
-          <button class="flex-1 py-2 rounded-full text-white font-semibold bg-red-300 hover:bg-red-400 active:scale-95 transition-all duration-150 active:bg-red-500" @click="close">
+          <button class="flex-1 py-2 rounded-full text-white font-semibold bg-red-300 hover:bg-red-400 active:scale-95 transition-all duration-150 active:bg-red-500 cursor-pointer" @click="close">
             Cancel
           </button>
         </div>

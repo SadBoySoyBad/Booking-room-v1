@@ -2,7 +2,7 @@
   <div class="bg-gray-100 min-h-screen p-4 flex flex-col items-center">
     <div class="relative w-full flex justify-center items-center mb-6 mt-8">
       <h1
-        class="text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-black/20 to-transparent absolute w-full top- 2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center leading-none tracking-widest"
+        class="text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-black/20 to-transparent absolute w-full top-2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center leading-none tracking-widest"
       >
         MANAGE
       </h1>

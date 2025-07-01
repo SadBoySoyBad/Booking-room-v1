@@ -2,20 +2,20 @@
   <div class="bg-gray-100 min-h-screen p-4 flex flex-col items-center">
     <div class="relative w-full flex justify-center items-center mb-6 mt-8">
       <h1
-        class="text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-black/20 to-transparent absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center leading-none tracking-widest"
+        class="text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-black/20 to-transparent absolute w-full top-2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center leading-none tracking-widest"
       >
         Overall
       </h1>
 
       <h1
-        class="top-5 text-[3rem] font-bold text-black relative z-10 text-center leading-none"
+        class="top-2 text-[3rem] font-bold text-black relative z-10 text-center leading-none"
       >
         Dashboard
       </h1>
     </div>
 
     <div class="flex-grow flex justify-center items-start w-full px-4 mb-8">
-      <div class="bg-white p-8 shadow-lg max-w-6xl w-full rounded-lg border-2 border-black">
+      <div class="bg-white p-8 shadow-lg max-w-6xl w-full rounded-lg ">
         <div class="grid grid-cols-2 gap-6 items-stretch">
           <div class="p-4 border-2 border-black flex flex-col justify-between">
             <RoomStatusCard />
@@ -35,8 +35,8 @@
           </div>
 
           <div class="p-4 border-2 border-black flex flex-col">
-            <h3 class="text-xl font-bold mb-4 text-center">Add Admin Form</h3>
-            <p class="text-sm text-gray-600 mb-4 text-center">Insert required information below</p>
+            <!-- <h3 class="text-xl font-bold mb-4 text-center">Add Admin Form</h3>
+            <p class="text-sm text-gray-600 mb-4 text-center">Insert required information below</p> -->
             <AddAdminForm />
           </div>
 

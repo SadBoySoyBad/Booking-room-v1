@@ -15,7 +15,7 @@
     </div>
 
     <div class="flex-grow flex justify-center items-start w-full px-4 mb-8">
-      <div class="bg-white p-8 shadow-lg max-w-6xl w-full rounded-lg border-2 border-black">
+      <div class="bg-white p-8 shadow-lg max-w-6xl w-full rounded-lg ">
         <div class="grid grid-cols-2 gap-6 items-stretch">
           <div class="p-4 border-2 border-black flex flex-col justify-between">
             <RoomStatusCard />

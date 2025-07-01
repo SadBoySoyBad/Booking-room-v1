@@ -9,10 +9,10 @@
         :class="[
           'rounded-full text-center py-4 font-bold m-5',
           room.status === 'AVAILABLE'
-            ? 'border border-green-600 border-2 text-green-600 bg-green-50'
+            ? ' border-green-600 border-2 text-green-600 bg-green-50'
             : room.status === 'OCCUPIED'
-              ? 'border border-red-600 border-2 text-red-600 bg-red-50'
-              : 'bg-gray-200 border-1 text-gray-600'
+            ? ' border-red-600 border-2 text-red-600 bg-red-50'
+            : 'bg-gray-200 border-1 text-gray-600'
         ]"
       >
         <p class="text-black text-2xl">{{ room.name }}</p>

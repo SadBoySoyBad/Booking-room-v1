@@ -25,9 +25,9 @@
             <div class="p-4 border-2 border-black flex flex-col h-full">
               <h3 class="text-xl font-bold mb-4 text-center">Requests approval</h3>
               <p class="text-sm text-gray-600 mb-4 text-center">Take action to accept / deny guests' request</p>
-              <RequestsApprovalTable :requestsData="requestsApprovalData" />
+              <RequestsApprovalTable :requests-data="requestsApprovalData" />
             </div>
-            <button @click="openRequestsApprovalPopup" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 p-1 bg-white/50 rounded-lg">
+            <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 p-1 bg-white/50 rounded-lg" @click="openRequestsApprovalPopup">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -44,9 +44,9 @@
             <div class="p-4 border-2 border-black flex flex-col h-full">
               <h3 class="text-xl font-bold mb-4 text-center">Activity Log</h3>
               <p class="text-sm text-gray-600 mb-4 text-center">View all actions done here</p>
-              <ActivityLogTable :activityLogData="activityLogData" />
+              <ActivityLogTable :activity-log-data="activityLogData" />
             </div>
-            <button @click="openActivityLogPopup" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 p-1 bg-white/50 rounded-lg">
+            <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 p-1 bg-white/50 rounded-lg" @click="openActivityLogPopup">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -56,7 +56,7 @@
       </div>
     </div>
 
-    <BookingModal
+    <Adminpopup
       :visible="showRequestsApprovalModal"
       title="Requests Approval (POP-UP)"
       confirm-button-text="Close"
@@ -65,11 +65,11 @@
       @close="showRequestsApprovalModal = false"
     >
         <template v-if="showRequestsApprovalModal">
-            <RequestsApprovalTable :requestsData="requestsApprovalData" :isModal="true" />
+            <RequestsApprovalTable :requests-data="requestsApprovalData" :is-modal="true" />
         </template>
-    </BookingModal>
+    </Adminpopup>
 
-    <BookingModal
+    <Adminpopup
       :visible="showActivityLogModal"
       title="Activity Log (POP-UP)"
       confirm-button-text="Close"
@@ -78,9 +78,9 @@
       @close="showActivityLogModal = false"
     >
         <template v-if="showActivityLogModal">
-            <ActivityLogTable :activityLogData="activityLogData" :isModal="true" />
+            <ActivityLogTable :activity-log-data="activityLogData" :is-modal="true" />
         </template>
-    </BookingModal>
+    </Adminpopup>
 
   </div>
 </template>
@@ -91,7 +91,7 @@ import RoomStatusCard from '../components/dashboard/RoomStatusCard.vue';
 import RequestsApprovalTable from '../components/dashboard/RequestsApprovalTable.vue';
 import AddAdminForm from '../components/dashboard/AddAdminForm.vue';
 import ActivityLogTable from '../components/dashboard/ActivityLogTable.vue';
-import BookingModal from '../components/BookingModal.vue';
+import Adminpopup from '~/components/Adminpopup.vue';
 
 useHead({
   title: "Dashboard Admin",

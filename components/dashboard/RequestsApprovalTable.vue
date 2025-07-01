@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <BookingModal
+  <Adminpopup
     :visible="showConfirmationModal"
     title="Confirm Action"
     confirmation-message="Are you sure you want to proceed?"
@@ -53,7 +53,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import BookingModal from '../BookingModal.vue'; // ตรวจสอบ Path ให้ถูกต้อง
+import Adminpopup from '../Adminpopup.vue'; 
 
 const props = defineProps({
   requestsData: { // รับข้อมูลมาจาก Parent Component

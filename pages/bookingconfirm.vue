@@ -319,7 +319,7 @@ useHead({
           <div class="space-y-1.5 mb-4">
             <div class="flex items-start justify-between w-full">
               <div class="font-bold whitespace-nowrap mr-2">Date :</div>
-              <div class="text-right">Day, DD MMúrese</div>
+              <div class="text-right">Day, DD MM</div>
             </div>
             <div class="flex items-start justify-between w-full">
               <div class="font-bold whitespace-nowrap mr-2">Time :</div>
@@ -334,7 +334,8 @@ useHead({
           <div class="space-y-1.5 mb-4">
             <div class="flex items-start justify-between w-full">
               <div class="font-bold whitespace-nowrap mr-2">Requirements :</div>
-              <ul class="list-disc text-right pl-4"> <li>Device</li>
+              <ul class="list-disc text-right pl-4"> 
+                <li>Device</li>
                 <li>Cable</li>
                 <li>Laptop</li>
               </ul>

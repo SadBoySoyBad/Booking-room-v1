@@ -12,9 +12,12 @@
       </NuxtLink>
 
       <!-- Navigation -->
-      <nav class="flex items-center space-x-6 text-md font-semibold mr-5">
+      <nav class="flex items-center space-x-6 text-md font-bold mr-5">
         <NuxtLink to="/letterbox" class="text-red-500 hover:underline transition">
-          LetterBox
+          <img src="/letterbox.png" alt="tetterbox" class="h-6 w-auto">
+        </NuxtLink>
+        <NuxtLink to="/history" class="hover:underline transition">
+          History
         </NuxtLink>
         <NuxtLink to="/booking" class="hover:underline transition">
           Reservation
@@ -59,4 +62,5 @@ function logout() {
   isLoggedIn.value = false
   router.push('/')
 }
+
 </script>

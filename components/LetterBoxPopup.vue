@@ -42,7 +42,7 @@ const emit = defineEmits(['close-letter-box']);
 
 // ข้อมูลการแจ้งเตือน
 const notifications = ref([
-  { message: 'TopicXX Meeting in XX minutes!', status: '', date: 'DD, Mth XX:XX' },
+  { message: 'TopicXX Meeting fin XX minutes!', status: '', date: 'DD, Mth XX:XX' },
   { message: 'Your request has been APPROVED!', status: 'approved', date: 'DD, Mth XX:XX' },
   { message: 'TopicXX Meeting has been CANCELED!', status: 'canceled', date: 'DD, Mth XX:XX' }
 ]);

@@ -1,16 +1,18 @@
 <template>
   <div class="flex flex-col space-y-4 items-center justify-center w-full h-full">
-    <div v-for="room in roomStatus" :key="room.id" class="flex items-center justify-center w-full" style="max-width: 450px;"> <div
+    <div v-for="room in roomStatus" :key="room.id" class="flex items-center justify-center w-full" style="max-width: 450px;">
+      <div
         :class="roomButtonClass(room.status)"
         class="rounded-full py-4 text-center flex-none"
-        style="width: 150px;"  >
+        style="width: 150px;" >
         <div class="flex-1">
             <div :class="roomTextClass(room.status)" class="text-lg font-bold">{{ room.name }}</div>
             <div :class="roomTextClass(room.status)" class="text-sm">{{ room.status.toUpperCase() }}</div>
         </div>
       </div>
 
-      <div class="text-black text-lg font-bold text-left pl-8 flex-1"> <div class="leading-tight">{{ room.time }},</div>
+      <div class="text-black text-lg font-bold text-left pl-8 flex-1">
+        <div class="leading-tight">{{ room.time }},</div>
         <div class="leading-tight">{{ room.topic }}</div>
         <div class="inline-block pb-1 leading-tight">{{ room.user }} ({{ room.role }})</div>
       </div>

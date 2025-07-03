@@ -1,57 +1,53 @@
 <template>
-  <div class="grid grid-cols-2 gap-8 p-10">
-    <!-- ด้านซ้าย: สถานะห้อง -->
-    <div class="p-5 border rounded">
-      <h2 class="font-bold text-lg m-5">Room Status</h2>
+  <div class="grid grid-cols-1 gap-2 p-2 sm:gap-4 sm:p-4 md:gap-8 md:p-10 custom-main-grid">
+    <div class="p-2 border rounded sm:p-3 md:p-5">
+      <h2 class="font-bold text-base m-1 sm:text-lg sm:m-2 md:text-lg md:m-5">Room Status</h2>
       <div
         v-for="room in rooms"
         :key="room.name"
         :class="[
-          'rounded-full text-center py-4 font-bold m-5',
+          'rounded-full text-center py-1 sm:py-2 md:py-4 font-bold m-1 sm:m-2 md:m-5',
           room.status === 'AVAILABLE'
-            ? ' border-green-600 border-2 text-green-600 bg-green-50'
+            ? 'border-green-600 border-2 text-green-600 bg-green-50'
             : room.status === 'OCCUPIED'
-            ? ' border-red-600 border-2 text-red-600 bg-red-50'
+            ? 'border-red-600 border-2 text-red-600 bg-red-50'
             : 'bg-gray-200 border-1 text-gray-600'
         ]"
       >
-        <p class="text-black text-2xl">{{ room.name }}</p>
-        <p class="font-bold">{{ room.status }}</p>
+        <p class="text-black text-lg sm:text-xl md:text-2xl whitespace-nowrap overflow-hidden text-ellipsis">{{ room.name }}</p>
+        <p class="font-bold text-xs sm:text-sm md:text-base whitespace-nowrap overflow-hidden text-ellipsis">{{ room.status }}</p>
       </div>
     </div>
 
-    <!-- ด้านขวา: ปฏิทิน + รายละเอียด -->
-    <div class="p-5 border rounded justify-center items-center">
-      <!-- ปฏิทิน -->
-      <div class="border rounded p-4">
-        <div class="flex justify-between items-center mb-4 bg-gray-200 rounded-full">
+    <div class="p-2 border rounded justify-center items-center sm:p-3 md:p-5">
+      <div class="border rounded p-2 sm:p-3 md:p-4 mb-2 sm:mb-3 md:mb-4">
+        <div class="flex justify-between items-center mb-1 sm:mb-2 md:mb-4 bg-gray-200 rounded-full">
           <button
-            class="bg-white rounded-full shadow-md p-2 w-8 h-8 m-1 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100"
+            class="bg-white rounded-full shadow-md p-0.5 w-6 h-6 m-0.5 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100 sm:w-7 sm:h-7 sm:p-1 md:w-8 md:h-8 md:p-2"
             @click="prevMonth"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-gray-600 sm:w-4 sm:h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
-          <h2 class="text-xl font-bold">{{ months[month] }} {{ year }}</h2>
+          <h2 class="text-sm sm:text-base md:text-xl font-bold whitespace-nowrap overflow-hidden text-ellipsis">{{ months[month] }} {{ year }}</h2>
           <button
-            class="bg-white rounded-full shadow-md p-2 w-8 h-8 m-1 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100"
+            class="bg-white rounded-full shadow-md p-0.5 w-6 h-6 m-0.5 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100 sm:w-7 sm:h-7 sm:p-1 md:w-8 md:h-8 md:p-2"
             @click="nextMonth"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-gray-600 sm:w-4 sm:h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </div>
 
-        <!-- Calendar Grid -->
-        <div class="grid grid-cols-7 gap-2 text-center justify-center">
-          <div v-for="d in days" :key="d" class="font-semibold text-gray-500 mb-2 m-1 flex">{{ d }}</div>
+        <div class="grid grid-cols-7 gap-0.5 text-center justify-center text-xs sm:gap-1 sm:text-sm md:gap-2 md:text-base">
+          <div v-for="d in days" :key="d" class="font-semibold text-gray-500 mb-0.5 m-0.5 text-xs sm:text-xs md:text-sm whitespace-nowrap overflow-hidden text-ellipsis">{{ d }}</div>
           <div
             v-for="(day, idx) in calendarDays"
             :key="idx"
-            class="w-10 h-10 flex items-center justify-center cursor-pointer transition-all duration-150"
+            class="w-7 h-7 flex items-center justify-center cursor-pointer transition-all duration-150 text-xs sm:w-8 sm:h-8 sm:text-sm md:w-10 md:h-10 md:text-base"
             :class="[
               day.day && selectedDate !== day.date ? 'hover:bg-red-100 rounded-full active:bg-red-600 active:scale-90 transition-all duration-100' : '',
               selectedDate === day.date ? 'bg-red-500 text-white rounded-full active:bg-red-600 active:scale-90 transition-all duration-100' : '',
@@ -64,39 +60,36 @@
         </div>
       </div>
 
-      <!-- Meeting Details -->
-      <div class="border rounded p-4 mt-4">
-        <h3 class="font-bold text-lg mb-2">Meeting Details</h3>
+      <div class="border rounded p-2 sm:p-3 md:p-4 mt-2 sm:mt-3 md:mt-4">
+        <h3 class="font-bold text-base sm:text-lg mb-1 sm:mb-2">Meeting Details</h3>
 
         <div v-if="isLoggedIn">
-          <!-- ผู้มีสิทธิ์ -->
           <div v-if="filteredMeetings.length > 0">
             <div
               v-for="meeting in filteredMeetings"
               :key="meeting.id"
-              class="mb-2 border border-gray-300 rounded p-2 bg-green-50"
+              class="mb-1 border border-gray-300 rounded p-1 sm:p-2 text-xs sm:text-sm md:text-base bg-green-50"
             >
-              <p><strong>Topic:</strong> {{ meeting.topic }}</p>
-              <p><strong>Room:</strong> {{ meeting.room }}</p>
-              <p><strong>Time:</strong> {{ meeting.time }}</p>
-              <p><strong>User:</strong> {{ meeting.user }}</p>
+              <p class="whitespace-nowrap overflow-hidden text-ellipsis"><strong>Topic:</strong> {{ meeting.topic }}</p>
+              <p class="whitespace-nowrap overflow-hidden text-ellipsis"><strong>Room:</strong> {{ meeting.room }}</p>
+              <p class="whitespace-nowrap overflow-hidden text-ellipsis"><strong>Time:</strong> {{ meeting.time }}</p>
+              <p class="whitespace-nowrap overflow-hidden text-ellipsis"><strong>User:</strong> {{ meeting.user }}</p>
             </div>
           </div>
-          <div v-else class="text-gray-500 italic mb-2">No meetings for this date.</div>
+          <div v-else class="text-gray-500 italic mb-1 text-xs sm:text-sm md:text-base whitespace-nowrap overflow-hidden text-ellipsis">No meetings for this date.</div>
 
-          <!-- ไม่มีสิทธิ์ -->
           <div v-if="unauthorizedMeetings.length > 0">
             <div
               v-for="meeting in unauthorizedMeetings"
               :key="meeting.id"
-              class="mb-2 border border-gray-200 rounded p-2 text-gray-500 italic bg-gray-100"
+              class="mb-1 border border-gray-200 rounded p-1 sm:p-2 text-gray-500 italic bg-gray-100 text-xs sm:text-sm md:text-base whitespace-nowrap overflow-hidden text-ellipsis"
             >
               {{ meeting.room }} - OCCUPIED
             </div>
           </div>
         </div>
 
-        <div v-else class="text-gray-500 italic">Please login to see details.</div>
+        <div v-else class="text-gray-500 italic text-xs sm:text-sm md:text-base whitespace-nowrap overflow-hidden text-ellipsis">Please login to see details.</div>
       </div>
     </div>
   </div>
@@ -128,7 +121,7 @@ const rooms = [
 const allMeetings = [
   {
     id: 1,
-    date: '2025-06-26',
+    date: '2025-07-02',
     room: 'Room A',
     topic: 'Project Kickoff',
     time: '10:00-11:00',
@@ -137,7 +130,7 @@ const allMeetings = [
   },
   {
     id: 2,
-    date: '2025-06-26',
+    date: '2025-07-02',
     room: 'Room B',
     topic: 'Weekly Sync',
     time: '13:00-14:00',
@@ -146,7 +139,7 @@ const allMeetings = [
   },
   {
     id: 3,
-    date: '2025-06-27',
+    date: '2025-07-03',
     room: 'Room A',
     topic: 'Project Follow-up',
     time: '10:00-12:00',
@@ -201,27 +194,81 @@ function nextMonth() {
 }
 
 const filteredMeetings = computed(() => {
+  const storedGuest = localStorage.getItem('guest');
+  let currentEmail = '';
+  if (storedGuest) {
+    try {
+      const guestData = JSON.parse(storedGuest);
+      if (guestData && guestData.type === 'microsoft') {
+        currentEmail = 'microsoft@example.com';
+      } else if (guestData && guestData.name) {
+        currentEmail = guestData.email || guestData.name;
+      }
+    } catch (e) {
+      console.error("Error parsing guest data from localStorage:", e);
+    }
+  }
+
   return allMeetings.filter(
     m =>
       m.date === selectedDate.value &&
-      (m.user === currentUser.value || m.participants.includes(currentUser.value))
+      (m.user === currentEmail || m.participants.includes(currentEmail))
   )
 })
 
 const unauthorizedMeetings = computed(() => {
+  const storedGuest = localStorage.getItem('guest');
+  let currentEmail = '';
+  if (storedGuest) {
+    try {
+      const guestData = JSON.parse(storedGuest);
+      if (guestData && guestData.type === 'microsoft') {
+        currentEmail = 'microsoft@example.com';
+      } else if (guestData && guestData.name) {
+        currentEmail = guestData.email || guestData.name;
+      }
+    } catch (e) {
+      console.error("Error parsing guest data from localStorage:", e);
+    }
+  }
+
   return allMeetings.filter(
     m =>
       m.date === selectedDate.value &&
-      !(m.user === currentUser.value || m.participants.includes(currentUser.value))
+      !(m.user === currentEmail || m.participants.includes(currentEmail))
   )
 })
 
-// Check login and get user only on client
 onMounted(() => {
   if (import.meta.client) {
-    const guest = localStorage.getItem('guest')
-    currentUser.value = guest || ''
-    isLoggedIn.value = !!guest
+    const guest = localStorage.getItem('guest');
+    if (guest) {
+      isLoggedIn.value = true;
+      try {
+        const guestData = JSON.parse(guest);
+        if (guestData.type === 'microsoft') {
+          currentUser.value = 'microsoft@example.com';
+        } else if (guestData.name) {
+          currentUser.value = guestData.email || guestData.name;
+        }
+      } catch (e) {
+        console.error("Error parsing guest data on mount:", e);
+        isLoggedIn.value = false;
+      }
+    } else {
+      isLoggedIn.value = false;
+    }
   }
 })
 </script>
+
+<style scoped>
+/* Custom CSS for 2-column layout on medium screens and above */
+/* This will make the main container a 2-column grid on medium screens and above */
+@media (min-width: 768px) { /* This corresponds to Tailwind's 'md' breakpoint */
+  /* Target .custom-main-grid directly and use !important to force override .grid-cols-1 */
+  .custom-main-grid { /* Removed .grid for simpler selector, added !important */
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important; 
+  }
+}
+</style>

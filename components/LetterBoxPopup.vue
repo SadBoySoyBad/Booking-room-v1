@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isVisible" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" @click.self="closePopup">
+  <div v-if="isVisible" class="fixed inset-0 backdrop-blur-sm bg-gray-600/20 bg-opacity-50 flex justify-center items-center z-50" @click.self="closePopup">
     <div class="bg-white rounded-lg p-6 shadow-xl w-11/12 max-w-md">
       <div class="flex items-center justify-center mb-5 text-lg font-bold text-gray-800 relative">
         <hr class="flex-grow border-t-2 border-gray-300 mx-2">
@@ -42,7 +42,7 @@ const emit = defineEmits(['close-letter-box']);
 
 // ข้อมูลการแจ้งเตือน
 const notifications = ref([
-  { message: 'TopicXX Meeting in XX minutes!', status: '', date: 'DD, Mth XX:XX' },
+  { message: 'TopicXX Meeting fin XX minutes!', status: '', date: 'DD, Mth XX:XX' },
   { message: 'Your request has been APPROVED!', status: 'approved', date: 'DD, Mth XX:XX' },
   { message: 'TopicXX Meeting has been CANCELED!', status: 'canceled', date: 'DD, Mth XX:XX' }
 ]);

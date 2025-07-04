@@ -1,290 +1,436 @@
 <template>
-  <div class="max-w-7xl mx-auto p-3 sm:p-4 md:p-6 grid grid-cols-1 gap-4 sm:gap-6 custom-grid-layout">
-    <div class="col-span-1 border border-gray-300 rounded-xl p-3 sm:p-4 bg-white shadow min-h-[calc(100vh-80px)] lg:h-[calc(100vh-100px)] overflow-y-auto">
-      <div class="flex justify-between items-center mb-3 sm:mb-4 bg-gray-200 rounded-full">
-        <button
-          class="bg-white rounded-full shadow-md p-1 w-6 h-6 sm:w-8 sm:h-8 m-1 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100"
-          @click="prevMonth"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-
-        <h2 class="text-base sm:text-xl font-bold">{{ months[month] }} {{ year }}</h2>
-
-        <button
-          class="bg-white rounded-full shadow-md p-1 w-6 h-6 sm:w-8 sm:h-8 m-1 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100"
-          @click="nextMonth"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-      <div class="grid grid-cols-7 gap-0.5 sm:gap-1 text-center justify-center">
-        <div v-for="d in days" :key="d" class="font-semibold text-gray-500 mb-1 sm:mb-2 m-0.5 text-xs sm:text-base flex justify-center">{{ d }}</div>
-        <div
-          v-for="(day, idx) in calendarDays"
-          :key="idx"
-          class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center cursor-pointer transition-all duration-150 text-xs sm:text-base"
-          :class="[
-            day.day && selectedDate !== day.date ? 'hover:bg-red-100 rounded-full active:bg-red-600 active:scale-90 transition-all duration-100' : '',
-            selectedDate === day.date ? 'bg-red-500 text-white rounded-full active:bg-red-600 active:scale-90 transition-all duration-100' : '',
-            isToday(day.date) && day.day && selectedDate !== day.date ? 'bg-gray-200 rounded-full' : '', // Apply gray background for today only if not selected and valid day
-          ]"
-          @click="day.day && selectDate(day.date)"
-        >
-          {{ day.day || '' }}
-        </div>
-      </div>
-      <div class="p-2 sm:p-3 flex flex-wrap justify-center items-center mt-3 sm:mt-4">
-        <button class="bg-blue-500 hover:bg-blue-700 hover:shadow-lg text-white font-bold py-1.5 px-3 sm:py-2 sm:px-4 rounded-full active:bg-blue-600 active:scale-95 transition-all duration-100 cursor-pointer text-sm sm:text-base mb-2 sm:mb-0"
-          @click="openModal">Booking room</button> <NuxtLink to="/history" class="ml-0 sm:ml-2">
-          <button class="bg-gray-300 hover:bg-gray-400 hover:shadow-lg text-gray-700 font-bold py-1.5 px-3 sm:py-2 sm:px-4 rounded-full active:bg-gray-500 active:scale-95 transition-all duration-100 cursor-pointer text-sm sm:text-base">History</button>
-        </NuxtLink>
-      </div>
-
-      <div class="mt-4 sm:mt-6">
-        <h3 class="font-semibold text-base sm:text-lg mb-1 sm:mb-2">Booking details</h3>
-        <ul>
-          <li
-            v-for="meeting in meetingsOnSelectedDate"
-            :key="meeting.id"
-            class="text-xs sm:text-sm border-b py-1.5 sm:py-2"
+  <div v-if="visible" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30 p-2 sm:p-4">
+    <div
+      class="bg-white rounded-3xl shadow-2xl max-w-[90vw] lg:max-w-[1000px] p-4 sm:p-6 md:p-8 relative overflow-y-auto max-h-[95vh] modal-root-container"
+    >
+      <button
+        class="absolute top-3 right-3 text-gray-500 hover:text-red-500 cursor-pointer transition-all duration-150 font-bold text-lg"
+        @click="close"
+      >
+        ✕
+      </button>
+      <!-- Left: Calendar & Time -->
+      <div class="modal-content-wrapper">
+        <div class="flex flex-col gap-3 sm:gap-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">
+            Reservation
+          </h2>
+          <!-- Calendar Header -->
+          <div
+            class="flex justify-between items-center mb-3 bg-gray-200 rounded-full px-1 py-1"
           >
-            <div>
-              <span class="font-semibold">{{ meeting.time }}</span>
-              <span> - </span>
-              <span>{{ isUserRelated(meeting) ? meeting.topic + ' @ Room ' + meeting.room : 'Room ' + meeting.room + ' - Reserved' }}</span>
-            </div>
-          </li>
-          <li v-if="meetingsOnSelectedDate.length === 0" class="text-center text-gray-500 text-xs sm:text-sm py-2">No bookings for this date.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="col-span-1 custom-col-span-2-layout border border-gray-300 rounded-xl p-3 sm:p-6 bg-white shadow min-h-[calc(100vh-80px)] lg:h-[calc(100vh-100px)] overflow-y-auto">
-      <h2 class="text-base sm:text-xl font-bold mb-3 sm:mb-4">Meetings on {{ selectedDate }}</h2>
-      <div class="relative h-full border-l border-gray-300">
-        <div v-for="h in 24" :key="h" class="h-10 sm:h-12 flex items-center text-xs sm:text-sm text-gray-500 pl-2 sm:pl-4 border-b border-gray-200 meeting-timeline-hourly-line">
-          <span class="w-12 sm:w-16 inline-block text-right pr-2 sm:pr-4">{{ h.toString().padStart(2, '0') }}:00</span>
-        </div>
-
-        <div
-          v-for="meeting in meetingsOnSelectedDate"
-          :key="meeting.id"
-          class="absolute left-14 sm:left-20 right-2 sm:right-4 text-xs rounded px-1.5 py-0.5 sm:px-2 sm:py-1 shadow-md transition-transform duration-150"
-          :class="isUserRelated(meeting) ? 'bg-blue-500 text-white hover:scale-[1.01]' : 'bg-gray-200 text-gray-600'"
-          :style="getMeetingStyle(meeting.time)"
-        >
-          <div class="font-bold text-xs sm:text-sm">
-            {{ isUserRelated(meeting) ? meeting.topic : 'Room ' + meeting.room }}
+            <button
+              class="bg-white rounded-full shadow-md p-1 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100"
+              @click="prevMonth"
+            >
+              ❮
+            </button>
+            <h2 class="text-base sm:text-lg font-bold">
+              {{ months[currentMonth] }} {{ currentYear }}
+            </h2>
+            <button
+              class="bg-white rounded-full shadow-md p-1 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-300 active:scale-95 transition-all duration-100"
+              @click="nextMonth"
+            >
+              ❯
+            </button>
           </div>
-          <div class="text-xxs sm:text-xs">
-            {{ meeting.time }} <span v-if="!isUserRelated(meeting)"> - Reserved</span>
+          <!-- Calendar Grid -->
+          <div class="grid grid-cols-7 gap-2 sm:gap-1 text-center">
+            <div
+              v-for="d in days"
+              :key="d"
+              class="font-semibold text-gray-500 mb-1 text-xs sm:text-sm flex items-center justify-center h-10 w-10 sm:h-8"
+            >
+              {{ d }}
+            </div>
+            <div
+              v-for="(day, idx) in calendarDays"
+              :key="idx"
+              class="day-cell-wrapper w-10 h-10 flex items-center justify-center cursor-pointer transition-all duration-150 text-xs sm:text-sm"
+              :class="[
+                day.day && selectedDateProp !== day.date
+                  ? 'hover:bg-red-100 rounded-full active:bg-red-600 active:scale-90'
+                  : '',
+                day.day && selectedDateProp === day.date
+                  ? 'bg-red-500 text-white rounded-full'
+                  : '',
+                day.isToday && selectedDateProp !== day.date && day.day
+                  ? 'bg-gray-200 text-gray-700 rounded-full'
+                  : '',
+                !day.day ? 'pointer-events-none' : '',
+              ]"
+              @click="day.day && selectDate(day.date)"
+            >
+              {{ day.day || '' }}
+            </div>
+          </div>
+          <!-- Time Input -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 mt-3 text-sm">
+            <label class="font-medium text-gray-700 whitespace-nowrap">Time :</label>
+            <div class="flex gap-2 w-full">
+              <input
+                v-model="form.start"
+                type="time"
+                class="border px-2 py-1 rounded-md cursor-pointer flex-grow min-w-0"
+              >
+              <span>-</span>
+              <input
+                v-model="form.end"
+                type="time"
+                class="border px-2 py-1 rounded-md cursor-pointer flex-grow min-w-0"
+              >
+            </div>
+          </div>
+          <!-- Start & End Date -->
+          <div class="flex flex-col gap-2 text-sm">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+              <label class="text-gray-700 font-medium whitespace-nowrap">Start :</label>
+              <input
+                type="date"
+                class="border px-2 py-1 rounded-md flex-grow cursor-pointer w-full"
+                :value="selectedDateProp"
+                readonly
+              >
+            </div>
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+              <label class="text-gray-700 font-medium whitespace-nowrap">End :</label>
+              <input
+                type="date"
+                class="border px-2 py-1 rounded-md flex-grow cursor-pointer w-full"
+                :value="selectedDateProp"
+                readonly
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Right: Form Info -->
+        <div class="mt-0 md:mt-16 flex flex-col gap-2 text-sm">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <label class="w-auto sm:w-24 font-medium whitespace-nowrap">Name :</label>
+            <input
+              v-model="form.name"
+              type="text"
+              class="border px-3 py-1 rounded-md flex-grow w-full"
+              placeholder="Name Surname"
+            >
+          </div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <label class="w-auto sm:w-24 font-medium whitespace-nowrap">Email :</label>
+            <input
+              v-model="form.email"
+              type="email"
+              class="border px-3 py-1 rounded-md flex-grow w-full"
+              placeholder="example@email.com"
+            >
+          </div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <label class="w-auto sm:w-24 font-medium whitespace-nowrap">Phone :</label>
+            <input
+              v-model="form.phone"
+              type="text"
+              class="border px-3 py-1 rounded-md flex-grow w-full"
+              placeholder="000-000-0000"
+            >
+          </div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <label class="w-auto sm:w-24 font-medium whitespace-nowrap">Room :</label>
+            <div class="flex flex-wrap gap-2 flex-grow">
+              <button
+                v-for="room in ['Meeting 1', 'Meeting 2', 'Meeting 3', 'Meeting 4']"
+                :key="room"
+                :class="[
+                  'px-3 py-1 rounded-full border text-xs font-semibold active:bg-red-100 active:scale-95 transition-all duration-150 cursor-pointer ',
+                  form.room === room ? 'bg-red-500 text-white' : 'text-gray-700 hover:bg-gray-100',
+                ]"
+                @click="form.room = room"
+              >
+                {{ room }}
+              </button>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <label class="w-auto sm:w-24 font-medium whitespace-nowrap">Participants :</label>
+            <span class="bg-gray-100 border px-4 py-1 rounded-md">{{
+              form.participants.length
+            }}</span>
+          </div>
+          <div
+            v-for="(email, i) in form.participants"
+            :key="i"
+            class="flex items-center gap-2"
+          >
+            <input
+              v-model="form.participants[i]"
+              type="email"
+              class="border px-3 py-1 rounded-md flex-grow min-w-0"
+              placeholder="example@email.com"
+            >
+            <button class="text-red-500 cursor-pointer hover:text-red-600 transition-all duration-150" @click="form.participants.splice(i, 1)">
+              &ndash;
+            </button>
+          </div>
+          <button
+            class="text-sm text-blue-500 hover:underline self-start mt-1 cursor-pointer transition-all duration-150"
+            @click="form.participants.push('')"
+          >
+            + Add Email
+          </button>
+
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-1">
+              <label class="font-medium mb-1">Requirements :</label>
+              <label class="flex items-center gap-2">
+                <input v-model="form.requirements" type="checkbox" value="Device, Cable" >
+                Device, Cable
+              </label>
+              <label class="flex items-center gap-2">
+                <input v-model="form.requirements" type="checkbox" value="Projector" >
+                Projector
+              </label>
+              <label class="flex items-center gap-2">
+                <input v-model="form.requirements" type="checkbox" value="Whiteboard" >
+                Whiteboard
+              </label>
+              <label class="flex items-center gap-2">
+                <input v-model="form.requirements" type="checkbox" value="HDMI Cable" >
+                HDMI Cable
+              </label>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-4">
+            <button
+              class="flex-1 py-2 rounded-full text-white font-semibold bg-[#b5c887] hover:bg-[#a4ba75] active:scale-95 transition-all duration-150 active:bg-green-1000 cursor-pointer"
+              @click="submit"
+            >
+              Confirm
+            </button>
+            <button
+              class="flex-1 py-2 rounded-full text-white font-semibold bg-red-300 hover:bg-red-400 active:scale-95 transition-all duration-150 active:bg-red-500 cursor-pointer"
+              @click="close"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <BookingModal
-    :visible="showModal"
-    :selected-date="selectedDate"
-    @close="handleCloseModal"
-    @submit="handleBookingSubmit"
-  />
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import BookingModal from '../components/BookingModal.vue'
+import { defineProps, defineEmits, ref, computed, watch } from 'vue'
 
-const showModal = ref(false)
-
-const today = new Date()
-const year = ref(today.getFullYear())
-const month = ref(today.getMonth())
-const selectedDate = ref(today.toISOString().split('T')[0])
-const currentUser = ref('')
-const isLoggedIn = ref(false)
-
-const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
-const months = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-]
-
-const allMeetings = ref([
-  {
-    id: 1,
-    date: '2025-06-28',
-    room: 'A',
-    topic: 'Morning Brief',
-    time: '08:00 - 09:30',
-    user: 'test@gmail.com',
-    participants: []
-  },
-  {
-    id: 2,
-    date: '2025-06-28',
-    room: 'B',
-    topic: 'Design Review',
-    time: '14:00 - 15:00',
-    user: 'test@gmail.com',
-    participants: []
-  },
-  {
-    id: 3,
-    date: '2025-06-26',
-    room: 'D',
-    topic: 'Project Kickoff',
-    time: '10:00 - 12:00',
-    user: 'test@gmail.com',
-    participants: []
-  },
-  {
-    id: 4,
-    date: '2025-06-26',
-    room: 'C',
-    topic: 'Weekly Sync',
-    time: '13:00 - 14:30',
-    user: 'test@gmail.com',
-    participants: []
-  },
+const props = defineProps({
+  visible: Boolean,
   
-])
+   // รับค่า selectedDate จากคอมโพเนนต์แม่
+})
 
-const hourlyLineRenderedHeight = ref(48); 
+const emit = defineEmits(['close', 'submit'])
+
+watch(() => props.visible, (val) => {
+  // console.log('BookingModal: prop "visible" เปลี่ยนเป็น:', val); // Debug: ตรวจสอบ prop visible
+
+  if (val) {
+    // กำหนดวันที่ในฟอร์มให้ตรงกับ selectedDate จาก prop หรือวันปัจจุบัน
+    if (props.selectedDate) {
+      form.value.date = props.selectedDate;
+    } else {
+      form.value.date = new Date().toISOString().split('T')[0];
+    }
+    
+    // ตั้งค่าปฏิทินใน Modal ให้ตรงกับเดือน/ปีของวันที่ที่เลือก
+    const dateToDisplay = new Date(form.value.date);
+    currentMonth.value = dateToDisplay.getMonth();
+    currentYear.value = dateToDisplay.getFullYear();
+
+    // รีเซ็ตฟอร์มอื่นๆ เมื่อ Modal เปิด เพื่อให้เป็นค่าเริ่มต้นทุกครั้ง
+    form.value.name = '';
+    form.value.email = '';
+    form.value.phone = '';
+    form.value.room = '';
+    form.value.start = '';
+    form.value.end = '';
+    form.value.requirements = [];
+    form.value.participants = [''];
+    form.value.topic = ''; // รีเซ็ต topic ด้วย
+  }
+}, { immediate: true }); // immediate: true เพื่อให้ watch ทำงานทันทีที่คอมโพเนนต์ถูก mount หาก visible เป็น true ตั้งแต่แรก
+
+
+const today = new Date() // ใช้สำหรับเปรียบเทียบว่าวันนั้นคือวันนี้หรือไม่
+const currentMonth = ref(today.getMonth()) // เดือนที่แสดงในปฏิทินของ Modal
+const currentYear = ref(today.getFullYear()) // ปีที่แสดงในปฏิทินของ Modal
+
+const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 const calendarDays = computed(() => {
   const result = []
-  const firstDay = new Date(year.value, month.value, 1).getDay()
-  const lastDate = new Date(year.value, month.value + 1, 0).getDate()
+  const firstDay = new Date(currentYear.value, currentMonth.value, 1).getDay() // 0=อาทิตย์, 1=จันทร์...
+  const lastDate = new Date(currentYear.value, currentMonth.value + 1, 0).getDate()
 
-  for (let i = 0; i < firstDay; i++) result.push({ day: null, date: null })
+  // วันที่ว่างก่อนวันแรกของเดือน เพื่อจัดตำแหน่งให้ตรงกับวันในสัปดาห์
+  for (let i = 0; i < firstDay; i++) {
+    result.push({ day: null, date: null, isToday: false })
+  }
 
+  // วันที่ในเดือน
   for (let d = 1; d <= lastDate; d++) {
-    const mm = String(month.value + 1).padStart(2, '0')
+    const mm = String(currentMonth.value + 1).padStart(2, '0')
     const dd = String(d).padStart(2, '0')
-    const dateStr = `${year.value}-${mm}-${dd}`
-    result.push({ day: d, date: dateStr })
+    const dateStr = `${currentYear.value}-${mm}-${dd}`
+    result.push({ day: d, date: dateStr, isToday: isCurrentDay(dateStr) })
   }
 
   return result
 })
 
-const meetingsOnSelectedDate = computed(() => {
-  return allMeetings.value.filter(m => m.date === selectedDate.value)
-})
-
-function isUserRelated(meeting) {
-  return isLoggedIn.value && (meeting.user === currentUser.value || meeting.participants.includes(currentUser.value))
+// ตรวจสอบว่าวันที่ที่ส่งมาเป็นวันเดียวกับวันนี้หรือไม่
+function isCurrentDay(dateStr) {
+  if (!dateStr) return false;
+  const checkDate = new Date(dateStr);
+  return checkDate.getDate() === today.getDate() &&
+         checkDate.getMonth() === today.getMonth() &&
+         checkDate.getFullYear() === today.getFullYear()
 }
 
-function selectDate(dateStr) {
-  selectedDate.value = dateStr
-}
-
+// เลื่อนไปเดือนก่อนหน้า
 function prevMonth() {
-  if (month.value === 0) {
-    month.value = 11
-    year.value--
+  if (currentMonth.value === 0) {
+    currentMonth.value = 11
+    currentYear.value--
   } else {
-    month.value--
+    currentMonth.value--
   }
 }
 
+// เลื่อนไปเดือนถัดไป
 function nextMonth() {
-  if (month.value === 11) {
-    month.value = 0
-    year.value++
+  if (currentMonth.value === 11) {
+    currentMonth.value = 0
+    currentYear.value++
   } else {
-    month.value++
+    currentMonth.value++
   }
 }
 
-function isToday(dateStr) {
-  const todayStr = today.toISOString().split('T')[0]
-  return todayStr === dateStr
+// เมื่อคลิกเลือกวันที่ในปฏิทินของ Modal
+const selectDate = (date) => {
+  form.value.date = date; // อัปเดตวันที่ใน form.value
 }
 
-function getMeetingStyle(time) {
-  const [start, end] = time.split(' - ')
-  const [startH, startM] = start.split(':').map(Number)
-  const [endH, endM] = end.split(':').map(Number)
-  
-  const pixelsPerMinute = hourlyLineRenderedHeight.value / 60;
-
-  const top = (startH * 60 + startM) * pixelsPerMinute;
-  const height = (endH * 60 + endM - (startH * 60 + startM)) * pixelsPerMinute;
-  
-  return `top: ${top}px; height: ${height}px;`;
-}
-
-function updateHourlyLineHeight() {
-    const hourlyLineElement = document.querySelector('.meeting-timeline-hourly-line');
-    if (hourlyLineElement) {
-        hourlyLineRenderedHeight.value = hourlyLineElement.offsetHeight;
-    }
-}
-
-onMounted(() => {
-  if (import.meta.client) {
-    updateHourlyLineHeight();
-    window.addEventListener('resize', updateHourlyLineHeight);
-
-    const guest = localStorage.getItem('guest')
-    currentUser.value = guest || ''
-    isLoggedIn.value = !!guest
-  }
+const form = ref({
+  name: '',
+  email: '',
+  phone: '',
+  room: '',
+  start: '',
+  end: '',
+  requirements: [],
+  participants: [''],
+  topic: '', // เพิ่ม field topic
+  date: '' // เพิ่ม field 'date' เพื่อเก็บวันที่ที่เลือกใน Modal
 })
 
-onUnmounted(() => {
-  if (import.meta.client) {
-    window.removeEventListener('resize', updateHourlyLineHeight);
+const submit = () => {
+  const [startHour, startMin] = form.value.start.split(':').map(Number)
+  const [endHour, endMin] = form.value.end.split(':').map(Number)
+
+  const start = startHour * 60 + startMin
+  const end = endHour * 60 + endMin
+
+  // การตรวจสอบข้อมูล (ใช้ภาษาไทย)
+  if (end <= start) {
+    alert('เวลาสิ้นสุดต้องหลังจากเวลาเริ่มต้น');
+    return
   }
-});
+  if (form.value.name === '') {
+    alert('กรุณากรอกชื่อ');
+    return
+  }
+  if (form.value.room === '') {
+    alert('กรุณาเลือกห้อง');
+    return
+  }
+  if (form.value.date === '') {
+    alert('กรุณาเลือกวันที่');
+    return
+  }
+  if (form.value.start === '') {
+    alert('กรุณาเลือกเวลาเริ่มต้น');
+    return
+  }
+  if (form.value.end === '') {
+    alert('กรุณาเลือกเวลาสิ้นสุด');
+    return
+  }
+  if (form.value.phone === '') {
+    alert('กรุณากรอกเบอร์โทรศัพท์');
+    return
+  }
 
-// เปลี่ยน @click="showModal = true" ในปุ่ม Booking room เป็น @click="openModal"
-function openModal() {
-  showModal.value = true;
-  console.log('Booking.vue: ปุ่ม "Booking room" ถูกคลิก! showModal.value เปลี่ยนเป็น:', showModal.value);
+  // กำหนดหัวข้อการประชุมเริ่มต้นหากไม่ได้กรอก
+  if (form.value.topic === '') {
+    form.value.topic = 'Untitled Meeting';
+  }
+
+  // Emit Event พร้อมข้อมูลฟอร์ม
+  emit('submit', {
+    ...form.value,
+    time: `${form.value.start} - ${form.value.end}`
+  })
+
+  close() // ปิด Modal และรีเซ็ตฟอร์ม
 }
 
-function handleBookingSubmit(newBooking){
-  allMeetings.value.push({
-    id: allMeetings.value.length + 1,
-    date: newBooking.date,
-    room: newBooking.room,
-    topic: newBooking.topic || 'Untitled Meeting',
-    time: newBooking.time,
-    user: currentUser.value,
-    participants: newBooking.participants.filter(p => p.trim()),
-  });
-  console.log("Booking.vue: New booking added:", newBooking);
-  console.log("Booking.vue: All meetings:", allMeetings.value);
-  showModal.value = false; // ปิด Modal หลังจาก Submit
-  console.log("Booking.vue: หลัง Submit, showModal.value เปลี่ยนเป็น:", showModal.value);
-}
-
-const handleCloseModal = () => {
-    showModal.value = false;
-    console.log("Booking.vue: Received 'close' event from BookingModal. showModal set to FALSE.");
+const close = () => {
+  // รีเซ็ตฟอร์มเมื่อปิด Modal
+  form.value = {
+    name: '',
+    email: '',
+    phone: '',
+    room: '',
+    start: '',
+    end: '',
+    requirements: [],
+    participants: [''],
+    topic: '',
+    date: ''
+  };
+  emit('close');
 }
 </script>
 
 <style scoped>
-/* Custom CSS for Grid Layout (to bypass Tailwind generation issue) */
-/* This will make the main container a 3-column grid on medium screens and above */
+/* Ensure the scoped styles are properly processed by Vue/Nuxt */
+
+/* Main content wrapper within the modal */
+.modal-content-wrapper {
+  display: flex; /* Default to flex for column stacking on small screens */
+  flex-direction: column; /* Stack columns vertically by default */
+  gap: 1rem; /* Adjust gap for smaller screens */
+}
+
+/* On medium screens and up, switch to a two-column grid layout */
 @media (min-width: 768px) { /* This corresponds to Tailwind's 'md' breakpoint */
-  .custom-grid-layout {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .modal-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 2rem; /* Match md:gap-8 (2 * 0.5rem = 1rem; 4 * 0.5rem = 2rem) */
   }
-  /* This will make the timeline column span 2 units */
-  .custom-col-span-2-layout {
-    grid-column: span 2 / span 2;
+  /* Since we are using grid directly, we don't need md:w-1/2 on children */
+}
+
+/* Optional: If you want to refine spacing for very small screens */
+@media (max-width: 639px) { /* Below sm breakpoint */
+  .modal-root-container {
+    padding: 0.75rem; /* Even smaller padding on very small screens */
+  }
+  .modal-content-wrapper {
+    gap: 0.75rem; /* Smaller gap */
   }
 }
 

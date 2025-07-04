@@ -48,7 +48,7 @@
           class="w-full border border-blue-600 text-blue-600 py-2 text-base rounded hover:bg-blue-50 transition"
           @click="loginWithMicrosoft"
         >
-          Login with Microsoft 365 <img src="/microsoft.png" alt="microsoft" class="h-5 w-auto ml-2 inline block mb-1">
+          Login with Microsoft 365
         </button>
       </div>
     </div>

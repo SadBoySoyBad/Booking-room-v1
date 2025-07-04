@@ -1,14 +1,18 @@
 <template>
   <div class="flex min-h-screen bg-gray-100">
-    <aside class="w-64 bg-purple-800 text-white flex flex-col p-4 shadow-lg">
-      <div class="mb-8 text-xl font-bold text-center">arrangemeet.</div>
+    <aside class="w-64 bg-white text-gray-700 flex flex-col p-4 shadow-lg"> 
+      <div class="mb-8 flex items-center justify-center space-x-2"> 
+        <img src="/logo.png" alt="arrangemeet logo" class="h-8 w-auto" /> 
+        <h1 class="text-xl font-bold whitespace-nowrap overflow-hidden text-ellipsis">arrangemeet.</h1> 
+      </div>
       <nav class="flex-grow">
         <ul>
           <li class="mb-2">
             <NuxtLink
               to="/admin/dashboard"
-              class="flex items-center p-2 rounded-lg hover:bg-purple-700 transition-colors"
-              active-class="bg-purple-700"
+              class="flex items-center p-2 rounded-lg transition-colors hover:bg-gray-100"
+              active-class="bg-purple-100 text-purple-800 border-l-4 border-purple-600 font-semibold -ml-4 pl-4 py-2" 
+              style="margin-left: -1rem; padding-left: 1rem;" 
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -29,9 +33,10 @@
           </li>
           <li class="mb-2">
             <NuxtLink
-              to="/admin/statistic"
-              class="flex items-center p-2 rounded-lg hover:bg-purple-700 transition-colors"
-              active-class="bg-purple-700"
+              to="/admin/analytics" 
+              class="flex items-center p-2 rounded-lg transition-colors hover:bg-gray-100"
+              active-class="bg-purple-100 text-purple-800 border-l-4 border-purple-600 font-semibold -ml-4 pl-4 py-2"
+              style="margin-left: -1rem; padding-left: 1rem;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,14 +57,15 @@
                   d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
                 />
               </svg>
-              Statistic
+              Analytics 
             </NuxtLink>
           </li>
           <li class="mb-2">
             <NuxtLink
               to="/admin/requests"
-              class="flex items-center p-2 rounded-lg hover:bg-purple-700 transition-colors"
-              active-class="bg-purple-700"
+              class="flex items-center p-2 rounded-lg transition-colors hover:bg-gray-100"
+              active-class="bg-purple-100 text-purple-800 border-l-4 border-purple-600 font-semibold -ml-4 pl-4 py-2"
+              style="margin-left: -1rem; padding-left: 1rem;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -78,15 +84,16 @@
               Requests
               <span
                 class="ml-auto bg-red-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full"
-                >30</span
+                >99</span
               >
             </NuxtLink>
           </li>
           <li class="mb-2">
             <NuxtLink
-              to="/admin/manage"
-              class="flex items-center p-2 rounded-lg hover:bg-purple-700 transition-colors"
-              active-class="bg-purple-700"
+              to="/admin/manage-accounts" 
+              class="flex items-center p-2 rounded-lg transition-colors hover:bg-gray-100"
+              active-class="bg-purple-100 text-purple-800 border-l-4 border-purple-600 font-semibold -ml-4 pl-4 py-2"
+              style="margin-left: -1rem; padding-left: 1rem;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -107,14 +114,15 @@
                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              Manage
+              Manage Accounts
             </NuxtLink>
           </li>
           <li class="mb-2">
             <NuxtLink
-              to="/admin/activity"
-              class="flex items-center p-2 rounded-lg hover:bg-purple-700 transition-colors"
-              active-class="bg-purple-700"
+              to="/admin/activities" 
+              class="flex items-center p-2 rounded-lg transition-colors hover:bg-gray-100"
+              active-class="bg-purple-100 text-purple-800 border-l-4 border-purple-600 font-semibold -ml-4 pl-4 py-2"
+              style="margin-left: -1rem; padding-left: 1rem;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +138,7 @@
                   d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                 />
               </svg>
-              Activity
+              Activities
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4 ml-auto"
@@ -150,8 +158,9 @@
           <li class="mb-2">
             <NuxtLink
               to="/admin/settings"
-              class="flex items-center p-2 rounded-lg hover:bg-purple-700 transition-colors"
-              active-class="bg-purple-700"
+              class="flex items-center p-2 rounded-lg transition-colors hover:bg-gray-100"
+              active-class="bg-purple-100 text-purple-800 border-l-4 border-purple-600 font-semibold -ml-4 pl-4 py-2"
+              style="margin-left: -1rem; padding-left: 1rem;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -177,50 +186,56 @@
           </li>
         </ul>
       </nav>
-      <div class="mt-auto">
-        <button
-          @click="logout"
-          class="flex items-center justify-center w-full p-2 rounded-lg bg-red-600 hover:bg-red-700 transition-colors text-white"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-            />
-          </svg>
-          Log Out
-        </button>
-      </div>
-    </aside>
+      </aside>
 
     <div class="flex-grow flex flex-col">
-      <header class="bg-white p-4 shadow-md flex items-center justify-between">
-        <div class="text-xl font-bold flex-shrink-0">arrangemeet.</div>
+      <header class="bg-purple-50 p-4 shadow-md flex items-center justify-between">
+        <nav class="text-lg font-bold flex-shrink-0 flex items-center space-x-1">
+            <span class="text-gray-700">Admin</span> 
+            <span class="text-gray-700"> > </span>
+            <span class="text-purple-700">{{ currentBreadcrumbPageName }}</span> </nav>
+        
         <nav class="flex items-center space-x-4 ml-auto">
-          <button class="text-gray-600 hover:text-gray-800 p-2 rounded-full bg-gray-100">
+          <button @click="openLetterBox" class="text-gray-600 hover:text-gray-800 p-2 rounded-full bg-purple-100">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.928-3.416A2 2 0 0113 6.305V7h2V6.305a2 2 0 012.072-1.721L21 8m0 0v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8m18 0L12 15M3 8l9 7 9-7" />
             </svg>
           </button>
           
-          <button class="text-gray-600 hover:text-gray-800 px-4 py-2 rounded-full bg-gray-100">History</button>
+          <NuxtLink to="/booking" class="text-purple-800 bg-purple-100 px-4 py-2 rounded-full hover:bg-purple-200 transition-colors">
+            Reservation
+          </NuxtLink>
           
-          <button class="text-gray-600 hover:text-gray-800 px-4 py-2 rounded-full bg-gray-100">Reservation</button>
-          
-          <span class="text-gray-800 px-4 py-2 rounded-full bg-gray-100">
-            Welcome, Admin01
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
+          <div class="relative">
+            <span
+              class="text-purple-800 px-4 py-2 rounded-full bg-purple-100 flex items-center cursor-pointer"
+              @click="toggleAdminDropdown"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              Admin01
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 ml-1 transition-transform duration-200"
+                :class="{'rotate-180': isAdminDropdownOpen}"
+                fill="none"
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+            
+            <div v-if="isAdminDropdownOpen" class="absolute top-full right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-10 overflow-hidden">
+              <NuxtLink to="/history" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"> History
+              </NuxtLink>
+              <button @click="logout" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">
+                Log Out
+              </button>
+            </div>
+          </div>
         </nav>
       </header>
 
@@ -229,17 +244,65 @@
       </main>
     </div>
   </div>
+
+  <LetterBoxPopup 
+    :isVisible="isLetterBoxPopupVisible" 
+    @close-letter-box="isLetterBoxPopupVisible = false"
+  />
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import { ref, computed, onBeforeUnmount } from 'vue'; 
+import { useRoute, useRouter } from "vue-router";
+import LetterBoxPopup from "~/components/LetterBoxPopup.vue"; 
 
 const router = useRouter();
+const route = useRoute(); 
+
+const isAdminDropdownOpen = ref(false);
+const isLetterBoxPopupVisible = ref(false); 
+
+const toggleAdminDropdown = () => {
+  isAdminDropdownOpen.value = !isAdminDropdownOpen.value;
+};
+
+const openLetterBox = () => { 
+  isLetterBoxPopupVisible.value = true;
+};
+
+// Logic สำหรับ Breadcrumb Dynamic Page Name
+const currentBreadcrumbPageName = computed(() => {
+  const pathParts = route.path.split('/');
+  let lastPart = pathParts.pop();
+  if (!lastPart && pathParts.length > 0) { 
+    lastPart = pathParts.pop();
+  }
+  if (lastPart) {
+    lastPart = lastPart.replace(/-/g, ' '); 
+    return lastPart.charAt(0).toUpperCase() + lastPart.slice(1); 
+  }
+  return '';
+});
+
+
+// Close dropdown and popup when clicking outside
+if (process.client) {
+  const handleClickOutside = (event) => {
+    if (isAdminDropdownOpen.value && !event.target.closest('.relative')) { 
+      isAdminDropdownOpen.value = false;
+    }
+  };
+  document.addEventListener('click', handleClickOutside);
+
+  onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside);
+  });
+}
 
 const logout = () => {
-  localStorage.removeItem("adminToken"); // หรือ key ที่ใช้เก็บ admin token ของคุณ
-  localStorage.removeItem("adminUser"); // หรือ key อื่นๆ ที่เกี่ยวข้อง
-  router.push("/"); // เปลี่ยนเส้นทางไปหน้า Home ('/')
+  localStorage.removeItem("adminToken"); 
+  localStorage.removeItem("adminUser"); 
+  router.push("/"); 
 };
 </script>
 

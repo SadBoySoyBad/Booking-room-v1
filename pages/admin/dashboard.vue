@@ -109,60 +109,66 @@
 <script setup>
 import { ref } from "vue";
 
-// This is crucial for Nuxt Layouts!
-// It tells Nuxt to use 'admin-layout' (from layouts/AdminLayout.vue) for this page.
+// บรรทัดนี้สำคัญมากสำหรับ Nuxt Layouts!
+// มันบอกให้ Nuxt ใช้ 'admin-layout' (จาก layouts/AdminLayout.vue) สำหรับหน้านี้
 definePageMeta({
   layout: 'admin-layout',
 });
 
-// Components used in this page
-import RoomStatusCard from "../components/dashboard/RoomStatusCard.vue";
-import MonthlyAttendanceGraph from "../components/dashboard/MonthlyAttendanceGraph.vue";
-import ClockWidget from "../components/dashboard/ClockWidget.vue";
-import TotalEventsChart from "../components/dashboard/TotalEventsChart.vue";
-import RecentActivitiesTable from "../components/dashboard/RecentActivitiesTable.vue";
-import StatisticTable from "../components/dashboard/StatisticTable.vue";
+// Components ที่ใช้ในหน้านี้
+import RoomStatusCard from "../../components/dashboard/RoomStatusCard.vue"; // แก้ path ให้ถูกต้อง
+import MonthlyAttendanceGraph from "../../components/dashboard/MonthlyAttendanceGraph.vue"; // แก้ path ให้ถูกต้อง
+import ClockWidget from "../../components/dashboard/ClockWidget.vue"; // แก้ path ให้ถูกต้อง
+import TotalEventsChart from "../../components/dashboard/TotalEventsChart.vue"; // แก้ path ให้ถูกต้อง
+import RecentActivitiesTable from "../../components/dashboard/RecentActivitiesTable.vue"; // แก้ path ให้ถูกต้อง
+import StatisticTable from "../../components/dashboard/StatisticTable.vue"; // แก้ path ให้ถูกต้อง
 
-// Components that might be used in modals or adapted
-import RequestsApprovalTable from "../components/dashboard/RequestsApprovalTable.vue";
-import ActivityLogTable from "../components/dashboard/ActivityLogTable.vue"; 
+// Components ที่อาจจะใช้ใน modals หรือปรับเปลี่ยน
+import RequestsApprovalTable from "../../components/dashboard/RequestsApprovalTable.vue"; // แก้ path ให้ถูกต้อง
+import ActivityLogTable from "../../components/dashboard/ActivityLogTable.vue"; // แก้ path ให้ถูกต้อง
 
 import Adminpopup from "~/components/Adminpopup.vue";
 
-// Set the page title
+// กำหนด Title ของหน้า
 useHead({
   title: "Dashboard Admin",
 });
 
-// Mock Data for Requests Approval Table
+// Mock Data สำหรับ Requests Approval Table
 const requestsApprovalData = ref([
-  { id: 1, date: "01 Jun 2025", name: "User 1", reqDate: "05 Jun 2025", reqRoom: "Room A", reqTime: "09:00 - 10:00", status: "pending" },
-  { id: 2, date: "02 Jun 2025", name: "User 2", reqDate: "06 Jun 2025", reqRoom: "Room B", reqTime: "14:00 - 15:00", status: "pending" },
-  { id: 3, date: "03 Jun 2025", name: "User 3", reqDate: "07 Jun 2025", reqRoom: "Room C", reqTime: "10:30 - 11:30", status: "pending" },
+  {
+    id: 1, date: "01 Jun 2025", name: "User 1", reqDate: "05 Jun 2025", reqRoom: "Room A", reqTime: "09:00 - 10:00", status: "pending",
+  },
+  {
+    id: 2, date: "02 Jun 2025", name: "User 2", reqDate: "06 Jun 2025", reqRoom: "Room B", reqTime: "14:00 - 15:00", status: "pending",
+  },
+  {
+    id: 3, date: "03 Jun 2025", name: "User 3", reqDate: "07 Jun 2025", reqRoom: "Room C", reqTime: "10:30 - 11:30", status: "pending",
+  },
 ]);
 
-// Mock Data for Activity Log Table
+// Mock Data สำหรับ Activity Log Table
 const activityLogData = ref([
-  { time: "10:00", name: "Example01", role: "User", action: "Reserved", actionType: "reserved" },
-  { time: "00:00:00", name: "Example02", role: "Guest", action: "Request", actionType: "request" },
-  { time: "00:00:00", name: "Example03", role: "Admin", action: "Approved", actionType: "approved" },
+  { time: "10:00", name: "Example01", role: "User", action: "Reserved", actionType: "reserved", },
+  { time: "00:00:00", name: "Example02", role: "Guest", action: "Request", actionType: "request", },
+  { time: "00:00:00", name: "Example03", role: "Admin", action: "Approved", actionType: "approved", },
 ]);
 
-// Mock Data for Statistic Table
+// Mock Data สำหรับ Statistic Table
 const statisticData = ref([
   { district: "District A", total: "1000", company: "Company X", totalEvents: "500" },
   { district: "District B", total: "800", company: "Company Y", totalEvents: "400" },
   { district: "District C", total: "1200", company: "Company Z", totalEvents: "600" },
 ]);
 
-// State and functions for Modals
+// สถานะและฟังก์ชันสำหรับ Modals
 const showRequestsApprovalModal = ref(false);
 const openRequestsApprovalPopup = () => { showRequestsApprovalModal.value = true; };
 
 const showActivityLogModal = ref(false);
 const openActivityLogPopup = () => { showActivityLogModal.value = true; };
 
-// Function to handle request updates (when Approve/Deny)
+// ฟังก์ชันสำหรับจัดการการอัปเดต Request (เมื่อ Approve/Deny)
 const handleUpdateRequests = ({ action, id }) => {
   console.log(`Action: ${action} for Request ID: ${id} received in DashboardAdmin`);
   requestsApprovalData.value = requestsApprovalData.value.filter( (req) => req.id !== id );
@@ -170,5 +176,5 @@ const handleUpdateRequests = ({ action, id }) => {
 </script>
 
 <style scoped>
-/* No custom styles needed, Tailwind CSS handles most responsiveness */
+/* ไม่มี custom styles ที่จำเป็น, Tailwind CSS จัดการเรื่อง responsive ส่วนใหญ่ */
 </style>

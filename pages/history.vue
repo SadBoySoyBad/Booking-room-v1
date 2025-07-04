@@ -85,92 +85,45 @@
 import { ref, onMounted } from 'vue';
 import HistoryActionPopUp from '../components/HistoryActionPopUp.vue'; // <-- ตรวจสอบ Path นี้ให้ถูกต้องกับโครงสร้างโฟลเดอร์ของคุณ
 
+// ตรวจสอบให้แน่ใจว่าไม่มี definePageMeta({ layout: 'admin-layout' }); ในไฟล์นี้
+// หรือถ้ามี ให้เปลี่ยนเป็น:
+definePageMeta({ layout: 'default' }); 
+
 onMounted(() => {
   document.title = "History";
 });
 
-//(Mock Data)
 const historyData = ref([
-  {
-    date: '01 Jan 23',
-    time: '10:00 - 11:00',
-    name: 'Meeting Room A',
-    type: 'Request',
-    actionType: 'Request',
-    statusType: 'Approved',
-  },
-  {
-    date: '05 Feb 23',
-    time: '14:30 - 15:30',
-    name: 'Projector B',
-    type: 'Booking',
-    actionType: 'Reserved',
-    statusType: 'Approved',
-  },
-  {
-    date: '10 Mar 23',
-    time: '09:00 - 10:00',
-    name: 'Laptop C',
-    type: 'Request',
-    actionType: 'Request',
-    statusType: 'Pending',
-  },
-  {
-    date: '15 Apr 23',
-    time: '11:00 - 12:00',
-    name: 'Conference Hall D',
-    type: 'Booking',
-    actionType: 'Reserved',
-    statusType: 'Pending',
-  },
-  {
-    date: '20 May 23',
-    time: '16:00 - 17:00',
-    name: 'Whiteboard E',
-    type: 'Request',
-    actionType: 'Request',
-    statusType: 'Approved',
-  },
+  { date: '01 Jan 23', time: '10:00 - 11:00', name: 'Meeting Room A', type: 'Request', actionType: 'Request', statusType: 'Approved' },
+  { date: '05 Feb 23', time: '14:30 - 15:30', name: 'Projector B', type: 'Booking', actionType: 'Reserved', statusType: 'Approved' },
+  { date: '10 Mar 23', time: '09:00 - 10:00', name: 'Laptop C', type: 'Request', actionType: 'Request', statusType: 'Pending' },
+  { date: '15 Apr 23', time: '11:00 - 12:00', name: 'Conference Hall D', type: 'Booking', actionType: 'Reserved', statusType: 'Pending' },
+  { date: '20 May 23', time: '16:00 - 17:00', name: 'Whiteboard E', type: 'Request', actionType: 'Request', statusType: 'Approved' },
 ]);
 
-// ฟังก์ชันที่จะถูกเรียกเมื่อ HistoryActionPopUp ส่ง event 'select-option'
 const handleHistoryOptionSelect = (index, option) => {
   if (option === 'edit') {
     editItem(historyData.value[index]);
   } else if (option === 'cancel') {
-    // Logic การยกเลิก: เปลี่ยน statusType เป็น 'Cancelled'
     historyData.value[index].statusType = 'Cancelled';
     alert(`Item "${historyData.value[index].name}" has been cancelled.`);
   }
 };
 
-// ฟังก์ชันสำหรับจัดการการคลิกปุ่ม Edit
 const editItem = (item) => {
   alert(`Editing item: ${item.name}`);
-  // **NOTE:** หากในอนาคตคุณต้องการให้ "Edit" เปิดฟอร์มการจอง/แก้ไข
-  // คุณจะต้องใช้การสื่อสารแบบ Global State Management (เช่น Vuex, Pinia)
-  // หรือ emit เหตุการณ์ขึ้นไปให้คอมโพเนนต์แม่ (App.vue) จัดการ
-  // เช่น: emit('open-edit-form', item);
 };
 
-// Computed properties หรือ methods สำหรับกำหนด class ของปุ่ม Action/Status
 const actionButtonClass = (type) => {
-  if (type === 'Request') {
-    return 'bg-yellow-100 text-yellow-800';
-  } else if (type === 'Reserved') {
-    return 'bg-green-100 text-green-800';
-  }
+  if (type === 'Request') { return 'bg-yellow-100 text-yellow-800'; } 
+  else if (type === 'Reserved') { return 'bg-green-100 text-green-800'; }
   return '';
 };
 
 const statusButtonClass = (type) => {
-  if (type === 'Approved') {
-    return 'bg-green-100 text-green-800';
-  } else if (type === 'Pending') {
-    return 'bg-orange-100 text-orange-800';
-  } else if (type === 'Cancelled') {
-    return 'bg-red-100 text-red-800';
-  }
+  if (type === 'Approved') { return 'bg-green-100 text-green-800'; } 
+  else if (type === 'Pending') { return 'bg-orange-100 text-orange-800'; } 
+  else if (type === 'Cancelled') { return 'bg-red-100 text-red-800'; }
   return '';
 };
 </script>

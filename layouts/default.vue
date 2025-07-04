@@ -6,11 +6,17 @@
       <NuxtLink to="/" class="hover:underline transition flex-shrink-0">
         <div class="flex items-center space-x-1">
           <img src="/logo.png" alt="logo" class="h-6 w-auto sm:h-7 md:h-8" />
-          <h1 class="text-lg font-bold whitespace-nowrap overflow-hidden text-ellipsis sm:text-xl md:text-2xl">arrangemeet.</h1>
+          <h1
+            class="text-lg font-bold whitespace-nowrap overflow-hidden text-ellipsis sm:text-xl md:text-2xl"
+          >
+            arrangemeet.
+          </h1>
         </div>
       </NuxtLink>
 
-      <nav class="flex flex-nowrap items-center gap-x-1 text-xs font-bold mr-1 sm:gap-x-2 sm:text-sm md:gap-x-4 md:text-md lg:gap-x-6 lg:text-md md:mr-5">
+      <nav
+        class="flex flex-nowrap items-center gap-x-1 text-xs font-bold mr-1 sm:gap-x-2 sm:text-sm md:gap-x-4 md:text-md lg:gap-x-6 lg:text-md md:mr-5"
+      >
         <div>
           <button
             @click="openLetterBox"
@@ -48,7 +54,7 @@
       </nav>
     </header>
 
-    <NuxtPage />
+    <slot />
   </div>
 </template>
 
@@ -57,29 +63,22 @@ import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useState } from "#app/composables/state";
 
-// ✅ Import Component LetterBoxPopup.vue
 import LetterBoxPopup from "~/components/LetterBoxPopup.vue";
 
-// ✅ ตัวแปร ref สำหรับควบคุมการแสดง/ซ่อน Pop-up
 const isLetterBoxPopupVisible = ref(false);
-
-// ✅ ฟังก์ชันสำหรับเปิด Pop-up
 const openLetterBox = () => {
   isLetterBoxPopupVisible.value = true;
 };
 
-// ✅ ใช้ useState สำหรับสถานะการ Login
 const isLoggedIn = useState("isLoggedIn", () => false);
 const router = useRouter();
 
-// ✅ Logic สำหรับตรวจสอบสถานะ Login จาก localStorage
-if (import.meta.client) {
+if (process.client) { 
   watchEffect(() => {
     isLoggedIn.value = !!localStorage.getItem("guest");
   });
 }
 
-// ✅ ฟังก์ชัน Logout
 function logout() {
   localStorage.removeItem("guest");
   isLoggedIn.value = false;

@@ -1,61 +1,74 @@
 <template>
-  <div class="flex flex-col space-y-4 items-center justify-center w-full h-full">
-    <div v-for="room in roomStatus" :key="room.id" class="flex items-center justify-center w-full" style="max-width: 450px;">
-      <div
-        :class="roomButtonClass(room.status)"
-        class="rounded-full py-4 text-center flex-none"
-        style="width: 150px;" >
-        <div class="flex-1">
-            <div :class="roomTextClass(room.status)" class="text-lg font-bold">{{ room.name }}</div>
-            <div :class="roomTextClass(room.status)" class="text-sm">{{ room.status.toUpperCase() }}</div>
-        </div>
-      </div>
-
-      <div class="text-black text-lg font-bold text-left pl-8 flex-1">
-        <div class="leading-tight">{{ room.time }},</div>
-        <div class="leading-tight">{{ room.topic }}</div>
-        <div class="inline-block pb-1 leading-tight">{{ room.user }} ({{ room.role }})</div>
-      </div>
+  <div
+    class="rounded-lg p-3 text-center border-2"
+    :class="getStatusClass(status)"
+  >
+    <div
+      class="text-sm font-semibold mb-1 rounded-full px-2 py-0.5 inline-block"
+      :class="getAvailabilityClass(status)"
+    >
+      {{ roomName }}
     </div>
+    <div class="text-xs text-gray-700">{{ time }}</div>
+    <div class="text-sm font-medium mt-1">{{ topic }}</div>
+    <div class="text-xs text-gray-600">{{ user }}</div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+const props = defineProps({
+  roomName: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    required: true,
+    validator: (value) =>
+      ["Available", "Occupied", "Maintenance"].includes(value),
+  },
+  time: {
+    type: String,
+    default: "XX:XX - XX:XX",
+  },
+  topic: {
+    type: String,
+    default: "",
+  },
+  user: {
+    type: String,
+    default: "",
+  },
+});
 
-const roomStatus = ref([
-  { id: 1, name: 'Room 1', status: 'available', time: '10:00 - 11:00', topic: 'Meeting Topic', user: 'Name Surname', role: 'ROLE' },
-  { id: 2, name: 'Room 2', status: 'occupied', time: '11:30 - 12:30', topic: 'Project Discussion', user: 'Name Surname', role: 'ROLE' },
-  { id: 3, name: 'Room 3', status: 'maintenance', time: 'XX:XX - XX:XX', topic: 'Maintenance', user: 'Name Surname', role: 'ROLE' },
-]);
-
-const roomButtonClass = (status) => {
+const getStatusClass = (status) => {
   switch (status) {
-    case 'available':
-      return 'bg-white hover:bg-green-100 border-2 border-green-800';
-    case 'occupied':
-      return 'bg-white hover:bg-red-100 border-2 border-red-600';
-    case 'maintenance':
-      return 'bg-gray-200 border-2 border-gray-400';
+    case "Available":
+      return "border-green-500 bg-green-50";
+    case "Occupied":
+      return "border-red-500 bg-red-50";
+    case "Maintenance":
+      return "border-gray-400 bg-gray-50";
     default:
-      return '';
+      return "border-gray-300 bg-white";
   }
 };
 
-const roomTextClass = (status) => {
+const getAvailabilityClass = (status) => {
   switch (status) {
-    case 'available':
-      return 'text-black text-green-900';
-    case 'occupied':
-      return 'text-black text-red-600';
-    case 'maintenance':
-      return 'text-gray-600 text-gray-400';
+    case "Available":
+      return "bg-green-500 text-white";
+    case "Occupied":
+      return "bg-red-500 text-white";
+    case "Maintenance":
+      return "bg-gray-500 text-white";
     default:
-      return 'text-black';
+      return "bg-gray-300 text-gray-800";
   }
 };
 </script>
 
 <style scoped>
-/* เพิ่มสไตล์เฉพาะสำหรับคอมโพเนนต์นี้ถ้าจำเป็น */
+/* ไม่มีโค้ด CSS หรือ Tailwind directives ที่ไม่จำเป็น หรือโค้ด JavaScript ในนี้ */
+/* ถ้าต้องการเพิ่ม custom CSS ให้ใส่ที่นี่ */
 </style>
